@@ -1,8 +1,17 @@
 {
-  "name": "rescript-dexie",
+  "$schema": "https://raw.githubusercontent.com/rescript-lang/rescript-compiler/master/docs/docson/build-schema.json",
+  "name": "@dusty-phillips/rescript-dexie",
   "version": "0.1.0",
-  "sources": {
-    "dir" : "src",
-    "subdirs" : true
-  }
+  "package-specs": {
+    "module": "es6",
+    "in-source": true
+  },
+  "sources": [
+    {
+      "dir": "src",
+      "subdirs": true
+    },
+    { "dir": "tests", "subdirs": true, "type": "dev" }
+  ],
+  "bs-dependencies": ["@dusty-phillips/rescript-zora"]
 }

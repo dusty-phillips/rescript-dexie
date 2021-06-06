@@ -1,19 +1,27 @@
 {
-    "name": "rescript-dexie",
-    "version": "0.1.0",
-    "type": "module",
-    "scripts": {
-        "clean": "rescript clean",
-        "build": "rescript build",
-        "watch": "rescript build -w"
-    },
-    "keywords": [
-        "ReScript"
-    ],
-    "author": "",
-    "license": "MIT",
-    "devDependencies": {
-        "rescript": "^9.1.3"
-    }
+  "name": "@dusty-phillips/rescript-dexie",
+  "version": "0.1.0",
+  "type": "module",
+  "scripts": {
+    "build": "rescript build",
+    "clean": "rescript clean",
+    "test": "pta 'tests/*.test.js'",
+    "test:watch": "npx onchange --initial '{tests,src}/*.js' -- pta 'tests/*.test.js'",
+    "watch": "rescript build -w"
+  },
+  "keywords": [
+    "ReScript"
+  ],
+  "author": "",
+  "license": "MIT",
+  "devDependencies": {
+    "@dusty-phillips/rescript-zora": "^1.0.0",
+    "onchange": "^7.1.0",
+    "rescript": "^9.1.3",
+    "pta": "^0.2.3",
+    "zora": "^4.1.0"
+  },
+  "dependencies": {
+    "@ryyppy/rescript-promise": "^2.0.0"
+  }
 }
-
