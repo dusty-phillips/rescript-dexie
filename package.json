@@ -17,11 +17,12 @@
   "devDependencies": {
     "@dusty-phillips/rescript-zora": "^1.0.0",
     "onchange": "^7.1.0",
-    "rescript": "^9.1.3",
     "pta": "^0.2.3",
+    "rescript": "^9.1.3",
     "zora": "^4.1.0"
   },
   "dependencies": {
-    "@ryyppy/rescript-promise": "^2.0.0"
+    "@ryyppy/rescript-promise": "^2.0.0",
+    "dexie": "^3.0.3"
   }
 }
