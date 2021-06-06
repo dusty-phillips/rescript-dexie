@@ -16,6 +16,7 @@
   "license": "MIT",
   "devDependencies": {
     "@dusty-phillips/rescript-zora": "^1.0.0",
+    "fake-indexeddb": "^3.1.2",
     "onchange": "^7.1.0",
     "pta": "^0.2.3",
     "rescript": "^9.1.3",
