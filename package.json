@@ -23,7 +23,7 @@
     "zora": "^5.0.0-alpha.3"
   },
   "dependencies": {
-    "@ryyppy/rescript-promise": "^2.0.0",
+    "@ryyppy/rescript-promise": "^2.1.0",
     "dexie": "^3.0.3"
   }
 }
