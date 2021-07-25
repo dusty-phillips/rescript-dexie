@@ -90,8 +90,26 @@ function $$default(t) {
                 t.equal(ids.length, 2, "Should have added two ids");
                 return Table.count(friends);
               });
-          return prim0$7.then(function (count) {
-                      t.equal(count, 3, "Should now have three entries");
+          var prim0$8 = prim0$7.then(function (count) {
+                t.equal(count, 3, "Should now have three entries");
+                return Table.$$delete(friends, 1);
+              });
+          var prim0$9 = prim0$8.then(function (param) {
+                return Table.count(friends);
+              });
+          var prim0$10 = prim0$9.then(function (count) {
+                t.equal(count, 2, "Should now have three entries");
+                return Table.bulkDelete(friends, [
+                            2,
+                            3,
+                            99
+                          ]);
+              });
+          var prim0$11 = prim0$10.then(function (param) {
+                return Table.count(friends);
+              });
+          return prim0$11.then(function (count) {
+                      t.equal(count, 0, "Should have deleted remaining entries");
                       return Zora.done(undefined);
                     });
         }));

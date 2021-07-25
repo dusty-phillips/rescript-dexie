@@ -76,6 +76,22 @@ let default: zoraTestBlock = t => {
     })
     ->p(count => {
       t->equal(count, 3, "Should now have three entries")
+
+      friends->Table.delete(1)
+    })
+    ->p(_ => {
+      friends->Table.count
+    })
+    ->p(count => {
+      t->equal(count, 2, "Should now have three entries")
+
+      friends->Table.bulkDelete([2, 3, 99])
+    })
+    ->p(_ => {
+      friends->Table.count
+    })
+    ->p(count => {
+      t->equal(count, 0, "Should have deleted remaining entries")
       done()
     })
   })
