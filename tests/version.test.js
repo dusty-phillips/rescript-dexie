@@ -27,6 +27,10 @@ function $$default(t) {
                   
                 }));
           console.log(version);
+          dexie.open();
+          var friends = dexie.table("friends");
+          console.log(friends.name);
+          dexie.close();
           t.ok(true, "It is fine");
           return Zora.done(undefined);
         }));

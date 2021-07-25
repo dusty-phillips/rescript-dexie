@@ -20,6 +20,15 @@ let default: zoraTestBlock = t => {
       })
 
     Js.log(version)
+
+    dexie->Dexie.opendb->ignore
+
+    let friends = dexie->Dexie.table("friends")
+
+    Js.log(friends.name)
+
+    dexie->Dexie.closedb->ignore
+
     t->ok(true, "It is fine")
     done()
   })
