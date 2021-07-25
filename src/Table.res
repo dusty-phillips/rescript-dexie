@@ -10,6 +10,9 @@ external bulkAdd_binding: (t<'item, 'id>, array<'item>, bulkAddOptions) => Promi
 external add: (t<'item, 'id>, 'item) => Promise.t<'id> = "add"
 
 @send
+external count: t<'item, 'id> => Promise.t<int> = "count"
+
+@send
 external getById: (t<'item, 'id>, 'id) => Promise.t<option<'item>> = "get"
 
 @send

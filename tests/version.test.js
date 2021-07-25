@@ -98,8 +98,15 @@ function $$default(t) {
                             }
                           ]);
               });
-          return prim0$10.then(function (ids) {
-                      t.equal(ids.length, 2, "Should have added two ids");
+          var prim0$11 = prim0$10.then(function (ids) {
+                t.equal(ids.length, 2, "Should have added two ids");
+                return Zora.done(undefined);
+              });
+          var prim0$12 = prim0$11.then(function (param) {
+                return Table.count(friends);
+              });
+          return prim0$12.then(function (count) {
+                      t.equal(count, 3, "Should now have three entries");
                       return Zora.done(undefined);
                     });
         }));

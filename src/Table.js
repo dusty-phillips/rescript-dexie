@@ -11,6 +11,10 @@ function add(prim0, prim1) {
   return prim0.add(prim1);
 }
 
+function count(prim) {
+  return prim.count();
+}
+
 function getById(prim0, prim1) {
   return prim0.get(prim1);
 }
@@ -21,9 +25,10 @@ function getByCriteria(prim0, prim1) {
 
 export {
   add ,
+  bulkAdd ,
+  count ,
   getById ,
   getByCriteria ,
-  bulkAdd ,
   
 }
 /* No side effect */

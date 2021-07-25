@@ -82,5 +82,12 @@ let default: zoraTestBlock = t => {
       t->equal(ids->Js.Array2.length, 2, "Should have added two ids")
       done()
     })
+    ->p(_ => {
+      friends->Table.count
+    })
+    ->p(count => {
+      t->equal(count, 3, "Should now have three entries")
+      done()
+    })
   })
 }
