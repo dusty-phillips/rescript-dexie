@@ -17,3 +17,5 @@ let getById: (t<'item, 'id>, 'id) => Promise.t<option<'item>>
 let getByCriteria: (t<'item, 'id>, Js.t<'a>) => Promise.t<option<'item>>
 
 let put: (t<'item, 'id>, 'item) => Promise.t<'id>
+
+let update: (t<'item, 'id>, 'id, Js.t<'a>) => Promise.t<int>

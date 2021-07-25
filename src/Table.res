@@ -30,6 +30,9 @@ external getByCriteria: (t<'item, 'id>, Js.t<'a>) => Promise.t<option<'item>> = 
 @send
 external put: (t<'item, 'id>, 'item) => Promise.t<'id> = "put"
 
+@send
+external update: (t<'item, 'id>, 'id, Js.t<'a>) => Promise.t<int> = "update"
+
 let bulkAdd = (table: t<'item, 'id>, items: array<'item>): Promise.t<array<'id>> => {
   table->bulkAdd_binding(items, {allKeys: true})
 }

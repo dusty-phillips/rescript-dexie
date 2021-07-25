@@ -115,14 +115,26 @@ let default: zoraTestBlock = t => {
       friends->Table.bulkPut([
         {id: Some(4), name: "Jerome", sex: #Male},
         {id: None, name: "Kim", sex: #Nonbinary},
+        {id: Some(8), name: "Tyrone", sex: #Male},
       ])
     })
     ->p(_ => {
       friends->Table.count
     })
     ->p(count => {
-      t->equal(count, 2, "Should have deleted remaining entries")
+      t->equal(count, 3, "Should have replaced one and added two entries")
 
+      friends->Table.update(4, {"sex": #Nonbinary})
+    })
+    ->p(updated => {
+      t->equal(updated, 1, "Should have updated one row")
+
+      friends->Table.getById(4)
+    })
+    ->p(result => {
+      t->optionSome(result, (t, friend) => {
+        t->equal(friend.sex, #Nonbinary, "Sex should have changed")
+      })
       done()
     })
   })

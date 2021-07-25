@@ -41,6 +41,10 @@ function put(prim0, prim1) {
   return prim0.put(prim1);
 }
 
+function update(prim0, prim1, prim2) {
+  return prim0.update(prim1, prim2);
+}
+
 export {
   add ,
   bulkAdd ,
@@ -51,6 +55,7 @@ export {
   getById ,
   getByCriteria ,
   put ,
+  update ,
   
 }
 /* No side effect */

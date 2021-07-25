@@ -144,14 +144,32 @@ function $$default(t) {
                               id: undefined,
                               name: "Kim",
                               sex: "Nonbinary"
+                            },
+                            {
+                              id: 8,
+                              name: "Tyrone",
+                              sex: "Male"
                             }
                           ]);
               });
           var prim0$16 = prim0$15.then(function (param) {
                 return Table.count(friends);
               });
-          return prim0$16.then(function (count) {
-                      t.equal(count, 2, "Should have deleted remaining entries");
+          var prim0$17 = prim0$16.then(function (count) {
+                t.equal(count, 3, "Should have replaced one and added two entries");
+                return Table.update(friends, 4, {
+                            sex: "Nonbinary"
+                          });
+              });
+          var prim0$18 = prim0$17.then(function (updated) {
+                t.equal(updated, 1, "Should have updated one row");
+                return Table.getById(friends, 4);
+              });
+          return prim0$18.then(function (result) {
+                      Zora.optionSome(t, result, (function (t, friend) {
+                              t.equal(friend.sex, "Nonbinary", "Sex should have changed");
+                              
+                            }));
                       return Zora.done(undefined);
                     });
         }));
