@@ -46,6 +46,7 @@ let default: zoraTestBlock = t => {
         t->equal(friend.name, "Chris", "Returned friend should have same name")
         t->equal(friend.sex, #Nonbinary, "Returned friend should have same sex")
       })
+
       friends->Table.getByCriteria({"name": "Chris"})
     })
     ->p(result => {
@@ -76,6 +77,19 @@ let default: zoraTestBlock = t => {
     })
     ->p(count => {
       t->equal(count, 3, "Should now have three entries")
+
+      friends->Table.put({id: Some(3), name: "Jess", sex: #Female})
+    })
+    ->p(id => {
+      t->equal(id, 3, "Should have updated the third object")
+
+      friends->Table.getById(3)
+    })
+    ->p(result => {
+      t->optionSome(result, (t, friend) => {
+        t->equal(friend.name, "Jess", "Name should have changed")
+        t->equal(friend.sex, #Female, "Sex should be what was set")
+      })
 
       friends->Table.delete(1)
     })

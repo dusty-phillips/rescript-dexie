@@ -92,12 +92,28 @@ function $$default(t) {
               });
           var prim0$8 = prim0$7.then(function (count) {
                 t.equal(count, 3, "Should now have three entries");
+                return Table.put(friends, {
+                            id: 3,
+                            name: "Jess",
+                            sex: "Female"
+                          });
+              });
+          var prim0$9 = prim0$8.then(function (id) {
+                t.equal(id, 3, "Should have updated the third object");
+                return Table.getById(friends, 3);
+              });
+          var prim0$10 = prim0$9.then(function (result) {
+                Zora.optionSome(t, result, (function (t, friend) {
+                        t.equal(friend.name, "Jess", "Name should have changed");
+                        t.equal(friend.sex, "Female", "Sex should be what was set");
+                        
+                      }));
                 return Table.$$delete(friends, 1);
               });
-          var prim0$9 = prim0$8.then(function (param) {
+          var prim0$11 = prim0$10.then(function (param) {
                 return Table.count(friends);
               });
-          var prim0$10 = prim0$9.then(function (count) {
+          var prim0$12 = prim0$11.then(function (count) {
                 t.equal(count, 2, "Should now have three entries");
                 return Table.bulkDelete(friends, [
                             2,
@@ -105,10 +121,10 @@ function $$default(t) {
                             99
                           ]);
               });
-          var prim0$11 = prim0$10.then(function (param) {
+          var prim0$13 = prim0$12.then(function (param) {
                 return Table.count(friends);
               });
-          return prim0$11.then(function (count) {
+          return prim0$13.then(function (count) {
                       t.equal(count, 0, "Should have deleted remaining entries");
                       return Zora.done(undefined);
                     });

@@ -31,6 +31,10 @@ function getByCriteria(prim0, prim1) {
   return prim0.get(prim1);
 }
 
+function put(prim0, prim1) {
+  return prim0.put(prim1);
+}
+
 export {
   add ,
   bulkAdd ,
@@ -39,6 +43,7 @@ export {
   $$delete ,
   getById ,
   getByCriteria ,
+  put ,
   
 }
 /* No side effect */
