@@ -7,10 +7,19 @@ type fakeIndexedDb
 external fdbFactory: unit => fakeIndexedDb = "default"
 
 let default: zoraTestBlock = t => {
-  t->test("factory makes two instances", t => {
+  t->test("Initialize version and upgrade", t => {
     let idb = fdbFactory()
     let dexie = Dexie.make("hello dexie", ~options={"indexedDB": idb, "IDBKeyRange": fIDBKeyRange})
-    Js.log(dexie)
+    let schema = [("friends", "++id,name,birthdate,sex"), ("pets", "++id,name,kind")]
+    let version =
+      dexie
+      ->Dexie.version(1)
+      ->DexieVersion.stores(schema)
+      ->DexieVersion.upgrade(_tx => {
+        let _ = 365 * 24 * 60 * 60 * 1000
+      })
+
+    Js.log(version)
     t->ok(true, "It is fine")
     done()
   })

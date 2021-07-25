@@ -2,17 +2,31 @@
 
 import * as Zora from "@dusty-phillips/rescript-zora/src/Zora.js";
 import Dexie from "dexie";
+import * as DexieVersion from "../src/DexieVersion.js";
 import FDBFactoryJs from "fake-indexeddb/lib/FDBFactory.js";
 import FDBKeyRangeJs from "fake-indexeddb/lib/FDBKeyRange.js";
 
 function $$default(t) {
-  t.test("factory makes two instances", (function (t) {
+  t.test("Initialize version and upgrade", (function (t) {
           var idb = new FDBFactoryJs();
           var dexie = new Dexie("hello dexie", {
                 indexedDB: idb,
                 IDBKeyRange: FDBKeyRangeJs
               });
-          console.log(dexie);
+          var schema = [
+            [
+              "friends",
+              "++id,name,birthdate,sex"
+            ],
+            [
+              "pets",
+              "++id,name,kind"
+            ]
+          ];
+          var version = DexieVersion.upgrade(DexieVersion.stores(dexie.version(1), schema), (function (_tx) {
+                  
+                }));
+          console.log(version);
           t.ok(true, "It is fine");
           return Zora.done(undefined);
         }));
