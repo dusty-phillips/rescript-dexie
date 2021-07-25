@@ -124,8 +124,34 @@ function $$default(t) {
           var prim0$13 = prim0$12.then(function (param) {
                 return Table.count(friends);
               });
-          return prim0$13.then(function (count) {
-                      t.equal(count, 0, "Should have deleted remaining entries");
+          var prim0$14 = prim0$13.then(function (count) {
+                t.equal(count, 0, "Should have deleted remaining entries");
+                return Table.put(friends, {
+                            id: undefined,
+                            name: "Nora",
+                            sex: "Female"
+                          });
+              });
+          var prim0$15 = prim0$14.then(function (id) {
+                t.equal(id, 4, "Should successfully add and increment id with put");
+                return Table.bulkPut(friends, [
+                            {
+                              id: 4,
+                              name: "Jerome",
+                              sex: "Male"
+                            },
+                            {
+                              id: undefined,
+                              name: "Kim",
+                              sex: "Nonbinary"
+                            }
+                          ]);
+              });
+          var prim0$16 = prim0$15.then(function (param) {
+                return Table.count(friends);
+              });
+          return prim0$16.then(function (count) {
+                      t.equal(count, 2, "Should have deleted remaining entries");
                       return Zora.done(undefined);
                     });
         }));

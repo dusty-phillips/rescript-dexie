@@ -1,10 +1,14 @@
 type t<'item, 'id> = {name: string}
 
-type bulkAddOptions = {allKeys: bool}
+type bulkOptions = {allKeys: bool}
 
 @send
-external bulkAdd_binding: (t<'item, 'id>, array<'item>, bulkAddOptions) => Promise.t<'idorarray> =
+external bulkAdd_binding: (t<'item, 'id>, array<'item>, bulkOptions) => Promise.t<'idorarray> =
   "bulkAdd"
+
+@send
+external bulkPut_binding: (t<'item, 'id>, array<'item>, bulkOptions) => Promise.t<'idorarray> =
+  "bulkPut"
 
 @send
 external add: (t<'item, 'id>, 'item) => Promise.t<'id> = "add"
@@ -28,4 +32,8 @@ external put: (t<'item, 'id>, 'item) => Promise.t<'id> = "put"
 
 let bulkAdd = (table: t<'item, 'id>, items: array<'item>): Promise.t<array<'id>> => {
   table->bulkAdd_binding(items, {allKeys: true})
+}
+
+let bulkPut = (table: t<'item, 'id>, items: array<'item>): Promise.t<array<'id>> => {
+  table->bulkPut_binding(items, {allKeys: true})
 }

@@ -7,6 +7,12 @@ function bulkAdd(table, items) {
             });
 }
 
+function bulkPut(table, items) {
+  return table.bulkPut(items, {
+              allKeys: true
+            });
+}
+
 function add(prim0, prim1) {
   return prim0.add(prim1);
 }
@@ -38,6 +44,7 @@ function put(prim0, prim1) {
 export {
   add ,
   bulkAdd ,
+  bulkPut ,
   bulkDelete ,
   count ,
   $$delete ,

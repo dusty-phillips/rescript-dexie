@@ -106,6 +106,23 @@ let default: zoraTestBlock = t => {
     })
     ->p(count => {
       t->equal(count, 0, "Should have deleted remaining entries")
+
+      friends->Table.put({id: None, name: "Nora", sex: #Female})
+    })
+    ->p(id => {
+      t->equal(id, 4, "Should successfully add and increment id with put")
+
+      friends->Table.bulkPut([
+        {id: Some(4), name: "Jerome", sex: #Male},
+        {id: None, name: "Kim", sex: #Nonbinary},
+      ])
+    })
+    ->p(_ => {
+      friends->Table.count
+    })
+    ->p(count => {
+      t->equal(count, 2, "Should have deleted remaining entries")
+
       done()
     })
   })
