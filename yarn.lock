@@ -128,10 +128,10 @@ domexception@^1.0.1:
   dependencies:
     webidl-conversions "^4.0.2"
 
-fake-indexeddb@^3.1.2:
-  version "3.1.2"
-  resolved "https://registry.yarnpkg.com/fake-indexeddb/-/fake-indexeddb-3.1.2.tgz#8073a12ed3b254f7afc064f3cc2629f0110a5303"
-  integrity sha512-W60eRBrE8r9o/EePyyUc63sr2I/MI9p3zVwLlC1WI1xdmQVqqM6+wec9KDWDz2EZyvJKhrDvy3cGC6hK8L1pfg==
+fake-indexeddb@^3.1.3:
+  version "3.1.3"
+  resolved "https://registry.yarnpkg.com/fake-indexeddb/-/fake-indexeddb-3.1.3.tgz#76d59146a6b994b9bb50ac9949cbd96ad6cca760"
+  integrity sha512-kpWYPIUGmxW8Q7xG7ampGL63fU/kYNukrIyy9KFj3+KVlFbE/SmvWebzWXBiCMeR0cPK6ufDoGC7MFkPhPLH9w==
   dependencies:
     realistic-structured-clone "^2.0.1"
     setimmediate "^1.0.5"
@@ -297,10 +297,10 @@ realistic-structured-clone@^2.0.1:
     typeson "^5.8.2"
     typeson-registry "^1.0.0-alpha.20"
 
-rescript@^9.1.3:
-  version "9.1.3"
-  resolved "https://registry.yarnpkg.com/rescript/-/rescript-9.1.3.tgz#1a0f41342acd8dc4e26fd1782d0997b8a7577698"
-  integrity sha512-TpfW3DakgCJtWbRvAek7cysuikBWarjqt8PrbFg0Rk3O+o4dt0inBdxyZe/+u3LOAWzyKK+2UlqC0xiCBgs6pQ==
+rescript@^9.1.4:
+  version "9.1.4"
+  resolved "https://registry.yarnpkg.com/rescript/-/rescript-9.1.4.tgz#1eb126f98d6c16942c0bf0df67c050198e580515"
+  integrity sha512-aXANK4IqecJzdnDpJUsU6pxMViCR5ogAxzuqS0mOr8TloMnzAjJFu63fjD6LCkWrKAhlMkFFzQvVQYaAaVkFXw==
 
 reusify@^1.0.4:
   version "1.0.4"
@@ -399,6 +399,11 @@ zora@^4.1.0:
   version "4.1.0"
   resolved "https://registry.yarnpkg.com/zora/-/zora-4.1.0.tgz#a0db6979ac315604df87794edaa72a71456ff4ce"
   integrity sha512-tFowFksaFIwp0hzZ9dhM1rlaicS6VNjNMxEH3phgR5Glz3EMAoRujjJ50aTLAsl//SArTdG/kBt5EuvhqS6mww==
+
+zora@^5.0.0-alpha.3:
+  version "5.0.0-alpha.3"
+  resolved "https://registry.yarnpkg.com/zora/-/zora-5.0.0-alpha.3.tgz#f0aa01f5b2332ad550092c6d8757d02bc80f5114"
+  integrity sha512-GfDl2+9QSnZJxHKfIu3KCwqW2VDft86uU6kStJpDa8nHPMPVkucRsL4kOPiapjxUcrDY8jfFP+gh4RcuAoL+oA==
 
 zora@~4.0.2:
   version "4.0.2"
