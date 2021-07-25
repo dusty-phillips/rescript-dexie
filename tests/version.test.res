@@ -46,9 +46,6 @@ let default: zoraTestBlock = t => {
         t->equal(friend.name, "Chris", "Returned friend should have same name")
         t->equal(friend.sex, #Nonbinary, "Returned friend should have same sex")
       })
-      done()
-    })
-    ->p(_ => {
       friends->Table.getByCriteria({"name": "Chris"})
     })
     ->p(result => {
@@ -56,23 +53,17 @@ let default: zoraTestBlock = t => {
         t->equal(friend.name, "Chris", "Returned friend should have same name")
         t->equal(friend.sex, #Nonbinary, "Returned friend should have same sex")
       })
-      done()
-    })
-    ->p(_ => {
+
       friends->Table.getById(5)
     })
     ->p(result => {
       t->optionNone(result, "result should be none")
-      done()
-    })
-    ->p(_ => {
+
       friends->Table.getByCriteria({"name": "nobody"})
     })
     ->p(result => {
       t->optionNone(result, "result should be none")
-      done()
-    })
-    ->p(_ => {
+
       friends->Table.bulkAdd([
         {id: None, name: "Samuel", sex: #Male},
         {id: None, name: "Samantha", sex: #Female},
@@ -80,9 +71,7 @@ let default: zoraTestBlock = t => {
     })
     ->p(ids => {
       t->equal(ids->Js.Array2.length, 2, "Should have added two ids")
-      done()
-    })
-    ->p(_ => {
+
       friends->Table.count
     })
     ->p(count => {

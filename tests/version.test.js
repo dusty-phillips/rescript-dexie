@@ -53,38 +53,26 @@ function $$default(t) {
                         t.equal(friend.sex, "Nonbinary", "Returned friend should have same sex");
                         
                       }));
-                return Zora.done(undefined);
-              });
-          var prim0$4 = prim0$3.then(function (param) {
                 return Table.getByCriteria(friends, {
                             name: "Chris"
                           });
               });
-          var prim0$5 = prim0$4.then(function (result) {
+          var prim0$4 = prim0$3.then(function (result) {
                 Zora.optionSome(t, result, (function (t, friend) {
                         t.equal(friend.name, "Chris", "Returned friend should have same name");
                         t.equal(friend.sex, "Nonbinary", "Returned friend should have same sex");
                         
                       }));
-                return Zora.done(undefined);
-              });
-          var prim0$6 = prim0$5.then(function (param) {
                 return Table.getById(friends, 5);
               });
-          var prim0$7 = prim0$6.then(function (result) {
+          var prim0$5 = prim0$4.then(function (result) {
                 Zora.optionNone(t, result, "result should be none");
-                return Zora.done(undefined);
-              });
-          var prim0$8 = prim0$7.then(function (param) {
                 return Table.getByCriteria(friends, {
                             name: "nobody"
                           });
               });
-          var prim0$9 = prim0$8.then(function (result) {
+          var prim0$6 = prim0$5.then(function (result) {
                 Zora.optionNone(t, result, "result should be none");
-                return Zora.done(undefined);
-              });
-          var prim0$10 = prim0$9.then(function (param) {
                 return Table.bulkAdd(friends, [
                             {
                               id: undefined,
@@ -98,14 +86,11 @@ function $$default(t) {
                             }
                           ]);
               });
-          var prim0$11 = prim0$10.then(function (ids) {
+          var prim0$7 = prim0$6.then(function (ids) {
                 t.equal(ids.length, 2, "Should have added two ids");
-                return Zora.done(undefined);
-              });
-          var prim0$12 = prim0$11.then(function (param) {
                 return Table.count(friends);
               });
-          return prim0$12.then(function (count) {
+          return prim0$7.then(function (count) {
                       t.equal(count, 3, "Should now have three entries");
                       return Zora.done(undefined);
                     });
