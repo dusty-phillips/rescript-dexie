@@ -23,16 +23,27 @@ function $$default(t) {
               "++id,name,kind"
             ]
           ];
-          var version = DexieVersion.upgrade(DexieVersion.stores(dexie.version(1), schema), (function (_tx) {
+          DexieVersion.upgrade(DexieVersion.stores(dexie.version(1), schema), (function (_tx) {
                   
                 }));
-          console.log(version);
           dexie.open();
           var friends = dexie.table("friends");
-          console.log(friends.name);
-          dexie.close();
+          t.equal(friends.name, "friends", "Table name should be `friends`");
           t.ok(true, "It is fine");
-          return Zora.done(undefined);
+          return friends.add({
+                            id: undefined,
+                            name: "Chris",
+                            sex: "Nonbinary"
+                          }).then(function (id) {
+                          t.equal(id, 1, "Id should be 1");
+                          return Zora.done(undefined);
+                        }).then(function (param) {
+                        return friends.get(1);
+                      }).then(function (result) {
+                      t.equal(result.name, "Chris", "Returned friend should have same name");
+                      t.equal(result.sex, "Nonbinary", "Returned friend should have same name");
+                      return Zora.done(undefined);
+                    });
         }));
   
 }
