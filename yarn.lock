@@ -12,14 +12,14 @@
   resolved "https://registry.yarnpkg.com/@blakeembrey/template/-/template-1.0.0.tgz#bf8828bc3ae8004d97904d78f64e3cc2cd216438"
   integrity sha512-J6WGZqCLdRMHUkyRG6fBSIFJ0rL60/nsQNh5rQvsYZ5u0PsKw6XQcJcA3DWvd9cN3j/IQx5yB1fexhCafwwUUw==
 
-"@dusty-phillips/rescript-zora@^1.0.0":
-  version "1.0.0"
-  resolved "https://registry.yarnpkg.com/@dusty-phillips/rescript-zora/-/rescript-zora-1.0.0.tgz#9270ef86ce6b2f76960fc775867fe1429f73e285"
-  integrity sha512-6T67Tz1hdKOdy8D7vkAon+z6xmRZcs00WPO5U7leCzu8Ooai93al/MJXHFOjiWfLQ+W9sicik4w6ay4tiHrUpw==
+"@dusty-phillips/rescript-zora@^1.1.0":
+  version "1.1.0"
+  resolved "https://registry.yarnpkg.com/@dusty-phillips/rescript-zora/-/rescript-zora-1.1.0.tgz#dadeca6a6018b8f92eca570667239927cd862744"
+  integrity sha512-XN3ng1Ouhds8ORJ1dIcFlvNv+Zwze4v+S717m3upKf9mzccORe1ua2m7sWHO00whlCEGVdR+li2+XUnlG3ChTA==
   dependencies:
-    "@ryyppy/rescript-promise" "^2.0.0"
+    "@ryyppy/rescript-promise" "^2.1.0"
     pta "^0.2.3"
-    zora "^4.1.0"
+    zora "^5.0.0"
 
 "@nodelib/fs.scandir@2.1.5":
   version "2.1.5"
@@ -42,7 +42,7 @@
     "@nodelib/fs.scandir" "2.1.5"
     fastq "^1.6.0"
 
-"@ryyppy/rescript-promise@^2.0.0", "@ryyppy/rescript-promise@^2.1.0":
+"@ryyppy/rescript-promise@^2.1.0":
   version "2.1.0"
   resolved "https://registry.yarnpkg.com/@ryyppy/rescript-promise/-/rescript-promise-2.1.0.tgz#a33861274c41360cfbe872cf489f3dcb8dd526e6"
   integrity sha512-+dW6msBrj2Lr2hbEMX+HoWCvN89qVjl94RwbYWJgHQuj8jm/izdPC0YzxgpGoEFdeAEW2sOozoLcYHxT6o5WXQ==
@@ -395,15 +395,10 @@ which@^2.0.1:
   dependencies:
     isexe "^2.0.0"
 
-zora@^4.1.0:
-  version "4.1.0"
-  resolved "https://registry.yarnpkg.com/zora/-/zora-4.1.0.tgz#a0db6979ac315604df87794edaa72a71456ff4ce"
-  integrity sha512-tFowFksaFIwp0hzZ9dhM1rlaicS6VNjNMxEH3phgR5Glz3EMAoRujjJ50aTLAsl//SArTdG/kBt5EuvhqS6mww==
-
-zora@^5.0.0-alpha.3:
-  version "5.0.0-alpha.3"
-  resolved "https://registry.yarnpkg.com/zora/-/zora-5.0.0-alpha.3.tgz#f0aa01f5b2332ad550092c6d8757d02bc80f5114"
-  integrity sha512-GfDl2+9QSnZJxHKfIu3KCwqW2VDft86uU6kStJpDa8nHPMPVkucRsL4kOPiapjxUcrDY8jfFP+gh4RcuAoL+oA==
+zora@^5.0.0:
+  version "5.0.0"
+  resolved "https://registry.yarnpkg.com/zora/-/zora-5.0.0.tgz#9f4a1e635524be1d8eac87f818ddcc1a75016bd5"
+  integrity sha512-fA6RdNLtzcCxy4m+HsWYVBnme7Jt1Ez4OgEMo62i6LanJCHawAhZ0n57hetWO35M/057eLVFRbtq7JTBpFNybg==
 
 zora@~4.0.2:
   version "4.0.2"
