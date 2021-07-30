@@ -12,6 +12,8 @@ let count: t<'item, 'id> => Promise.t<int>
 
 let delete: (t<'item, 'id>, 'id) => Promise.t<unit>
 
+let findeByCriteria: (t<'item, 'id>, Js.t<'a>) => Promise.t<Collection.t<'item>>
+
 let getById: (t<'item, 'id>, 'id) => Promise.t<option<'item>>
 
 let getByCriteria: (t<'item, 'id>, Js.t<'a>) => Promise.t<option<'item>>

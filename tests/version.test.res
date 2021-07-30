@@ -135,6 +135,15 @@ let default: zoraTestBlock = t => {
       t->optionSome(result, (t, friend) => {
         t->equal(friend.sex, #Nonbinary, "Sex should have changed")
       })
+
+      friends->Table.findeByCriteria({"sex": #Nonbinary})
+    })
+    ->p(Collection.toArray)
+    ->p(result => {
+      t->equal(result->Belt.Array.length, 2, "Should be two people in array")
+
+      Js.log(result)
+
       done()
     })
   })

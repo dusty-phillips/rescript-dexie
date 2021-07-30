@@ -165,11 +165,21 @@ function $$default(t) {
                 t.equal(updated, 1, "Should have updated one row");
                 return Table.getById(friends, 4);
               });
-          return prim0$18.then(function (result) {
-                      Zora.optionSome(t, result, (function (t, friend) {
-                              t.equal(friend.sex, "Nonbinary", "Sex should have changed");
-                              
-                            }));
+          var prim0$19 = prim0$18.then(function (result) {
+                Zora.optionSome(t, result, (function (t, friend) {
+                        t.equal(friend.sex, "Nonbinary", "Sex should have changed");
+                        
+                      }));
+                return Table.findeByCriteria(friends, {
+                            sex: "Nonbinary"
+                          });
+              });
+          var prim0$20 = prim0$19.then(function (prim) {
+                return prim.toArray();
+              });
+          return prim0$20.then(function (result) {
+                      t.equal(result.length, 2, "Should be two people in array");
+                      console.log(result);
                       return Zora.done(undefined);
                     });
         }));

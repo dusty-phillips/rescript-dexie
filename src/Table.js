@@ -29,6 +29,10 @@ function $$delete(prim0, prim1) {
   return prim0.delete(prim1);
 }
 
+function findeByCriteria(prim0, prim1) {
+  return prim0.where(prim1);
+}
+
 function getById(prim0, prim1) {
   return prim0.get(prim1);
 }
@@ -52,6 +56,7 @@ export {
   bulkDelete ,
   count ,
   $$delete ,
+  findeByCriteria ,
   getById ,
   getByCriteria ,
   put ,
