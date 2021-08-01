@@ -1,7 +1,7 @@
 open Zora
 open TestSetup
 
-let default: zoraTestBlock = t => {
+zora("Basic commands on tables", t => {
   t->test("Test basic methods", t => {
     let dexie = setup()
 
@@ -92,10 +92,8 @@ let default: zoraTestBlock = t => {
       friends->Table.findeByCriteria({"color": #Purple})
     })
     ->p(Collection.toArray)
-    ->p(result => {
+    ->pt(result => {
       t->equal(result->Belt.Array.length, 1, "Should be one #Purple person in array")
-
-      done()
     })
   })
 
@@ -143,10 +141,10 @@ let default: zoraTestBlock = t => {
     ->p(_ => {
       friends->Table.count
     })
-    ->p(count => {
+    ->pt(count => {
       t->equal(count, 3, "Should have replaced one and added two entries")
-
-      done()
     })
   })
-}
+
+  done()
+})
