@@ -8,7 +8,11 @@ type t
 @send external table: (t, string) => Table.t<'item, 'id> = "table"
 
 @send
-external transaction: (t, string, array<string>, Transaction.callback) => Promise.t<'result> =
-  "transaction"
+external transaction: (
+  t,
+  Transaction.mode,
+  array<string>,
+  Transaction.callback,
+) => Promise.t<'result> = "transaction"
 
 @send external version: (t, int) => DexieVersion.t = "version"
