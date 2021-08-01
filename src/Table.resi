@@ -4,11 +4,11 @@ let add: (t<'item, 'id>, 'item) => Promise.t<'id>
 
 let bulkAdd: (t<'item, 'id>, array<'item>) => Promise.t<array<'id>>
 
+let bulkDelete: (t<'item, 'id>, array<'id>) => Promise.t<unit>
+
 let bulkGet: (t<'item, 'id>, array<'id>) => Promise.t<array<option<'item>>>
 
 let bulkPut: (t<'item, 'id>, array<'item>) => Promise.t<array<'id>>
-
-let bulkDelete: (t<'item, 'id>, array<'id>) => Promise.t<unit>
 
 let count: t<'item, 'id> => Promise.t<int>
 
@@ -23,3 +23,5 @@ let getByCriteria: (t<'item, 'id>, Js.t<'a>) => Promise.t<option<'item>>
 let put: (t<'item, 'id>, 'item) => Promise.t<'id>
 
 let update: (t<'item, 'id>, 'id, Js.t<'a>) => Promise.t<int>
+
+// TODO: Where clause

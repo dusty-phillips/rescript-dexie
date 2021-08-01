@@ -1,40 +1,15 @@
 open Zora
-
-type fakeIndexedDb
-
-let p = Promise.then
-let pt = Promise.thenResolve
-
-@module("fake-indexeddb/lib/FDBKeyRange.js") external fIDBKeyRange: 'keyrange = "default"
-@new @module("fake-indexeddb/lib/FDBFactory.js")
-external fdbFactory: unit => fakeIndexedDb = "default"
-
-type friend = {
-  id: option<int>,
-  name: string,
-  sex: [#Male | #Female | #Nonbinary],
-}
+open TestSetup
 
 let default: zoraTestBlock = t => {
   t->test("Initialize version and upgrade", t => {
-    let idb = fdbFactory()
-    let dexie = Dexie.make("hello dexie", ~options={"indexedDB": idb, "IDBKeyRange": fIDBKeyRange})
-    let schema = [("friends", "++id,name,birthdate,sex"), ("pets", "++id,name,kind")]
-    dexie
-    ->Dexie.version(1)
-    ->DexieVersion.stores(schema)
-    ->DexieVersion.upgrade(_tx => {
-      let _ = 365 * 24 * 60 * 60 * 1000
-    })
-    ->ignore
-
-    dexie->Dexie.opendb->ignore
+    let dexie = setup()
 
     let friends: Table.t<friend, int> = dexie->Dexie.table("friends")
     t->equal(friends.name, "friends", "Table name should be `friends`")
 
     friends
-    ->Table.add({id: None, name: "Chris", sex: #Nonbinary})
+    ->Table.add({id: None, name: "Chris", color: #Purple})
     ->p(id => {
       t->equal(id, 1, "Id should be 1")
       friends->Table.getById(1)
@@ -42,7 +17,7 @@ let default: zoraTestBlock = t => {
     ->p(result => {
       t->optionSome(result, (t, friend) => {
         t->equal(friend.name, "Chris", "Returned friend should have same name")
-        t->equal(friend.sex, #Nonbinary, "Returned friend should have same sex")
+        t->equal(friend.color, #Purple, "Returned friend should have same color")
       })
 
       friends->Table.getByCriteria({"name": "Chris"})
@@ -50,7 +25,7 @@ let default: zoraTestBlock = t => {
     ->p(result => {
       t->optionSome(result, (t, friend) => {
         t->equal(friend.name, "Chris", "Returned friend should have same name")
-        t->equal(friend.sex, #Nonbinary, "Returned friend should have same sex")
+        t->equal(friend.color, #Purple, "Returned friend should have same color")
       })
 
       friends->Table.getById(5)
@@ -64,8 +39,8 @@ let default: zoraTestBlock = t => {
       t->optionNone(result, "result should be none")
 
       friends->Table.bulkAdd([
-        {id: None, name: "Samuel", sex: #Male},
-        {id: None, name: "Samantha", sex: #Female},
+        {id: None, name: "Samuel", color: #Blue},
+        {id: None, name: "Samantha", color: #Red},
       ])
     })
     ->p(ids => {
@@ -85,17 +60,17 @@ let default: zoraTestBlock = t => {
       )
       t->optionNone(result[2], "Third result should be undefined")
 
-      friends->Table.put({id: Some(3), name: "Jess", sex: #Female})
+      friends->Table.put({id: Some(3), name: "Jess", color: #Red})
     })
     ->p(id => {
-      t->equal(id, 3, "Should have updated the third object")
+      t->equal(id, 3, "Should have updated the third friend")
 
       friends->Table.getById(3)
     })
     ->p(result => {
       t->optionSome(result, (t, friend) => {
         t->equal(friend.name, "Jess", "Name should have changed")
-        t->equal(friend.sex, #Female, "Sex should be what was set")
+        t->equal(friend.color, #Red, "Color should be what was set")
       })
 
       friends->Table.delete(1)
@@ -114,15 +89,15 @@ let default: zoraTestBlock = t => {
     ->p(count => {
       t->equal(count, 0, "Should have deleted remaining entries")
 
-      friends->Table.put({id: None, name: "Nora", sex: #Female})
+      friends->Table.put({id: None, name: "Nora", color: #Red})
     })
     ->p(id => {
       t->equal(id, 4, "Should successfully add and increment id with put")
 
       friends->Table.bulkPut([
-        {id: Some(4), name: "Jerome", sex: #Male},
-        {id: None, name: "Kim", sex: #Nonbinary},
-        {id: Some(8), name: "Tyrone", sex: #Male},
+        {id: Some(4), name: "Jerome", color: #Blue},
+        {id: None, name: "Kim", color: #Purple},
+        {id: Some(8), name: "Tyrone", color: #Blue},
       ])
     })
     ->p(_ => {
@@ -131,7 +106,7 @@ let default: zoraTestBlock = t => {
     ->p(count => {
       t->equal(count, 3, "Should have replaced one and added two entries")
 
-      friends->Table.update(4, {"sex": #Nonbinary})
+      friends->Table.update(4, {"color": #Purple})
     })
     ->p(updated => {
       t->equal(updated, 1, "Should have updated one row")
@@ -140,10 +115,10 @@ let default: zoraTestBlock = t => {
     })
     ->p(result => {
       t->optionSome(result, (t, friend) => {
-        t->equal(friend.sex, #Nonbinary, "Sex should have changed")
+        t->equal(friend.color, #Purple, "Color should have changed")
       })
 
-      friends->Table.findeByCriteria({"sex": #Nonbinary})
+      friends->Table.findeByCriteria({"color": #Purple})
     })
     ->p(Collection.toArray)
     ->p(result => {

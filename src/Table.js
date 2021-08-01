@@ -17,12 +17,12 @@ function add(prim0, prim1) {
   return prim0.add(prim1);
 }
 
-function bulkGet(prim0, prim1) {
-  return prim0.bulkGet(prim1);
-}
-
 function bulkDelete(prim0, prim1) {
   return prim0.bulkDelete(prim1);
+}
+
+function bulkGet(prim0, prim1) {
+  return prim0.bulkGet(prim1);
 }
 
 function count(prim) {
@@ -56,9 +56,9 @@ function update(prim0, prim1, prim2) {
 export {
   add ,
   bulkAdd ,
+  bulkDelete ,
   bulkGet ,
   bulkPut ,
-  bulkDelete ,
   count ,
   $$delete ,
   findeByCriteria ,
