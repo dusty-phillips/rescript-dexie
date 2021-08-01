@@ -3,6 +3,7 @@ open Zora
 type fakeIndexedDb
 
 let p = Promise.then
+let pt = Promise.thenResolve
 
 @module("fake-indexeddb/lib/FDBKeyRange.js") external fIDBKeyRange: 'keyrange = "default"
 @new @module("fake-indexeddb/lib/FDBFactory.js")
@@ -36,9 +37,6 @@ let default: zoraTestBlock = t => {
     ->Table.add({id: None, name: "Chris", sex: #Nonbinary})
     ->p(id => {
       t->equal(id, 1, "Id should be 1")
-      done()
-    })
-    ->p(_ => {
       friends->Table.getById(1)
     })
     ->p(result => {
@@ -77,6 +75,15 @@ let default: zoraTestBlock = t => {
     })
     ->p(count => {
       t->equal(count, 3, "Should now have three entries")
+
+      friends->Table.bulkGet([1, 2, 999])
+    })
+    ->p(result => {
+      t->equal(result->Js.Array.length, 3, "Should have retrieved two ids")
+      t->optionSome(result[0], (t, friend) =>
+        t->equal(friend.name, "Chris", "First array result should be Chris")
+      )
+      t->optionNone(result[2], "Third result should be undefined")
 
       friends->Table.put({id: Some(3), name: "Jess", sex: #Female})
     })

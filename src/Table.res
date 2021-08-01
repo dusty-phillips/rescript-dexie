@@ -17,6 +17,9 @@ external add: (t<'item, 'id>, 'item) => Promise.t<'id> = "add"
 external bulkDelete: (t<'item, 'id>, array<'id>) => Promise.t<unit> = "bulkDelete"
 
 @send
+external bulkGet: (t<'item, 'id>, array<'id>) => Promise.t<array<option<'item>>> = "bulkGet"
+
+@send
 external count: t<'item, 'id> => Promise.t<int> = "count"
 
 @send external delete: (t<'item, 'id>, 'id) => Promise.t<unit> = "delete"

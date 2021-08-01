@@ -4,6 +4,8 @@ let add: (t<'item, 'id>, 'item) => Promise.t<'id>
 
 let bulkAdd: (t<'item, 'id>, array<'item>) => Promise.t<array<'id>>
 
+let bulkGet: (t<'item, 'id>, array<'id>) => Promise.t<array<option<'item>>>
+
 let bulkPut: (t<'item, 'id>, array<'item>) => Promise.t<array<'id>>
 
 let bulkDelete: (t<'item, 'id>, array<'id>) => Promise.t<unit>

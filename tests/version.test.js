@@ -4,11 +4,16 @@ import * as Zora from "@dusty-phillips/rescript-zora/src/Zora.js";
 import * as Curry from "rescript/lib/es6/curry.js";
 import * as Table from "../src/Table.js";
 import Dexie from "dexie";
+import * as Caml_array from "rescript/lib/es6/caml_array.js";
 import * as DexieVersion from "../src/DexieVersion.js";
 import FDBFactoryJs from "fake-indexeddb/lib/FDBFactory.js";
 import FDBKeyRangeJs from "fake-indexeddb/lib/FDBKeyRange.js";
 
 function p(prim0, prim1) {
+  return prim0.then(Curry.__1(prim1));
+}
+
+function pt(prim0, prim1) {
   return prim0.then(Curry.__1(prim1));
 }
 
@@ -42,12 +47,9 @@ function $$default(t) {
               });
           var prim0$1 = prim0.then(function (id) {
                 t.equal(id, 1, "Id should be 1");
-                return Zora.done(undefined);
-              });
-          var prim0$2 = prim0$1.then(function (param) {
                 return Table.getById(friends, 1);
               });
-          var prim0$3 = prim0$2.then(function (result) {
+          var prim0$2 = prim0$1.then(function (result) {
                 Zora.optionSome(t, result, (function (t, friend) {
                         t.equal(friend.name, "Chris", "Returned friend should have same name");
                         t.equal(friend.sex, "Nonbinary", "Returned friend should have same sex");
@@ -57,7 +59,7 @@ function $$default(t) {
                             name: "Chris"
                           });
               });
-          var prim0$4 = prim0$3.then(function (result) {
+          var prim0$3 = prim0$2.then(function (result) {
                 Zora.optionSome(t, result, (function (t, friend) {
                         t.equal(friend.name, "Chris", "Returned friend should have same name");
                         t.equal(friend.sex, "Nonbinary", "Returned friend should have same sex");
@@ -65,13 +67,13 @@ function $$default(t) {
                       }));
                 return Table.getById(friends, 5);
               });
-          var prim0$5 = prim0$4.then(function (result) {
+          var prim0$4 = prim0$3.then(function (result) {
                 Zora.optionNone(t, result, "result should be none");
                 return Table.getByCriteria(friends, {
                             name: "nobody"
                           });
               });
-          var prim0$6 = prim0$5.then(function (result) {
+          var prim0$5 = prim0$4.then(function (result) {
                 Zora.optionNone(t, result, "result should be none");
                 return Table.bulkAdd(friends, [
                             {
@@ -86,12 +88,25 @@ function $$default(t) {
                             }
                           ]);
               });
-          var prim0$7 = prim0$6.then(function (ids) {
+          var prim0$6 = prim0$5.then(function (ids) {
                 t.equal(ids.length, 2, "Should have added two ids");
                 return Table.count(friends);
               });
-          var prim0$8 = prim0$7.then(function (count) {
+          var prim0$7 = prim0$6.then(function (count) {
                 t.equal(count, 3, "Should now have three entries");
+                return Table.bulkGet(friends, [
+                            1,
+                            2,
+                            999
+                          ]);
+              });
+          var prim0$8 = prim0$7.then(function (result) {
+                t.equal(result.length, 3, "Should have retrieved two ids");
+                Zora.optionSome(t, Caml_array.get(result, 0), (function (t, friend) {
+                        t.equal(friend.name, "Chris", "First array result should be Chris");
+                        
+                      }));
+                Zora.optionNone(t, Caml_array.get(result, 2), "Third result should be undefined");
                 return Table.put(friends, {
                             id: 3,
                             name: "Jess",
@@ -188,6 +203,7 @@ function $$default(t) {
 
 export {
   p ,
+  pt ,
   $$default ,
   $$default as default,
   
