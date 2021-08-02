@@ -5,8 +5,8 @@
   "scripts": {
     "build": "rescript build",
     "clean": "rescript clean",
-    "test": "pta 'tests/*.test.js'",
-    "test:watch": "npx onchange --initial '{tests,src}/*.js' -- pta 'tests/*.test.js'",
+    "test": "pta 'tests/*.test.mjs'",
+    "test:watch": "npx onchange --initial '{tests,src}/*.mjs' -- pta 'tests/*.test.mjs'",
     "watch": "rescript build -w"
   },
   "keywords": [

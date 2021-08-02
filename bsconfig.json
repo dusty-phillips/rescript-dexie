@@ -6,6 +6,7 @@
     "module": "es6",
     "in-source": true
   },
+  "suffix": ".mjs",
   "sources": [
     {
       "dir": "src",

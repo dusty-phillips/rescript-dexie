@@ -2,7 +2,7 @@
 
 import * as Curry from "rescript/lib/es6/curry.js";
 import Dexie from "dexie";
-import * as DexieVersion from "../src/DexieVersion.js";
+import * as DexieVersion from "../src/DexieVersion.mjs";
 import FDBFactoryJs from "fake-indexeddb/lib/FDBFactory.js";
 import FDBKeyRangeJs from "fake-indexeddb/lib/FDBKeyRange.js";
 
