@@ -1,7 +1,7 @@
 open Zora
 open TestSetup
 
-zora("Basic commands on tables", t => {
+zora("Table commands", t => {
   t->test("Test basic methods", t => {
     let dexie = setup()
 
@@ -84,7 +84,7 @@ zora("Basic commands on tables", t => {
 
       friends->Table.getById(4)
     })
-    ->p(result => {
+    ->pt(result => {
       t->optionSome(result, (t, friend) => {
         t->equal(friend.color, #Purple, "Color should have changed")
       })

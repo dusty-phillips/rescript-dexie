@@ -6,12 +6,12 @@ import * as Table from "../src/Table.mjs";
 import * as TestSetup from "./TestSetup.mjs";
 import * as Caml_array from "rescript/lib/es6/caml_array.js";
 
-Zora$1.test("Basic commands on tables", (function (t) {
+Zora$1.test("Table commands", (function (t) {
         t.test("Test basic methods", (function (t) {
                 var dexie = TestSetup.setup(undefined);
                 var friends = dexie.table("friends");
                 t.equal(friends.name, "friends", "Table name should be `friends`");
-                return TestSetup.pt(TestSetup.p(TestSetup.p(TestSetup.p(TestSetup.p(TestSetup.p(TestSetup.p(TestSetup.p(TestSetup.p(TestSetup.p(TestSetup.p(TestSetup.p(TestSetup.p(TestSetup.p(TestSetup.p(TestSetup.p(Table.add(friends, {
+                return TestSetup.pt(TestSetup.p(TestSetup.pt(TestSetup.p(TestSetup.p(TestSetup.p(TestSetup.p(TestSetup.p(TestSetup.p(TestSetup.p(TestSetup.p(TestSetup.p(TestSetup.p(TestSetup.p(TestSetup.p(TestSetup.p(Table.add(friends, {
                                                                                             id: undefined,
                                                                                             name: "Chris",
                                                                                             color: "Purple"

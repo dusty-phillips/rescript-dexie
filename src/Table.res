@@ -25,7 +25,7 @@ external count: t<'item, 'id> => Promise.t<int> = "count"
 @send external delete: (t<'item, 'id>, 'id) => Promise.t<unit> = "delete"
 
 @send
-external findeByCriteria: (t<'item, 'id>, Js.t<'a>) => Promise.t<Collection.t<'item>> = "where"
+external findeByCriteria: (t<'item, 'id>, Js.t<'a>) => Collection.t<'item> = "where"
 
 @send
 external getById: (t<'item, 'id>, 'id) => Promise.t<option<'item>> = "get"
