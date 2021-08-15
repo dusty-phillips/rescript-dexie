@@ -53,6 +53,10 @@ function update(prim0, prim1, prim2) {
   return prim0.update(prim1, prim2);
 }
 
+function where(prim0, prim1) {
+  return prim0.where(prim1);
+}
+
 export {
   add ,
   bulkAdd ,
@@ -66,6 +70,7 @@ export {
   getByCriteria ,
   put ,
   update ,
+  where ,
   
 }
 /* No side effect */

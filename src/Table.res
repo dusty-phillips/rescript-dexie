@@ -39,6 +39,9 @@ external put: (t<'item, 'id>, 'item) => Promise.t<'id> = "put"
 @send
 external update: (t<'item, 'id>, 'id, Js.t<'a>) => Promise.t<int> = "update"
 
+@send
+external where: (t<'item, 'id>, string) => Where.t<'item> = "where"
+
 let bulkAdd = (table: t<'item, 'id>, items: array<'item>): Promise.t<array<'id>> => {
   table->bulkAdd_binding(items, {allKeys: true})
 }

@@ -92,9 +92,17 @@ zora("Table commands", t => {
       friends->Table.findeByCriteria({"color": #Purple})
     })
     ->p(Collection.toArray)
-    ->pt(result => {
+    ->p(result => {
       t->equal(result->Belt.Array.length, 1, "Should be one #Purple person in array")
+      friends->Table.where("name")->Where.equals("Jess")->Collection.toArray
     })
+    ->pt(array =>
+      t->equal(
+        array,
+        [{TestSetup.id: Some(3), name: "Jess", color: #Blue}],
+        "Should have the one matching element",
+      )
+    )
   })
 
   t->test("Test bulk methods", t => {

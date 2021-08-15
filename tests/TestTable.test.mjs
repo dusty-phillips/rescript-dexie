@@ -11,99 +11,106 @@ Zora$1.test("Table commands", (function (t) {
                 var dexie = TestSetup.setup(undefined);
                 var friends = dexie.table("friends");
                 t.equal(friends.name, "friends", "Table name should be `friends`");
-                return TestSetup.pt(TestSetup.p(TestSetup.pt(TestSetup.p(TestSetup.p(TestSetup.p(TestSetup.p(TestSetup.p(TestSetup.p(TestSetup.p(TestSetup.p(TestSetup.p(TestSetup.p(TestSetup.p(TestSetup.p(TestSetup.p(Table.add(friends, {
-                                                                                            id: undefined,
-                                                                                            name: "Chris",
-                                                                                            color: "Purple"
-                                                                                          }), (function (id) {
-                                                                                          t.equal(id, 1, "Id should be 1");
-                                                                                          return Table.getById(friends, 1);
+                return TestSetup.pt(TestSetup.p(TestSetup.p(TestSetup.pt(TestSetup.p(TestSetup.p(TestSetup.p(TestSetup.p(TestSetup.p(TestSetup.p(TestSetup.p(TestSetup.p(TestSetup.p(TestSetup.p(TestSetup.p(TestSetup.p(TestSetup.p(Table.add(friends, {
+                                                                                                id: undefined,
+                                                                                                name: "Chris",
+                                                                                                color: "Purple"
+                                                                                              }), (function (id) {
+                                                                                              t.equal(id, 1, "Id should be 1");
+                                                                                              return Table.getById(friends, 1);
+                                                                                            })), (function (result) {
+                                                                                          Zora.optionSome(t, result, (function (t, friend) {
+                                                                                                  t.equal(friend.name, "Chris", "Returned friend should have same name");
+                                                                                                  t.equal(friend.color, "Purple", "Returned friend should have same color");
+                                                                                                  
+                                                                                                }));
+                                                                                          return Table.getByCriteria(friends, {
+                                                                                                      name: "Chris"
+                                                                                                    });
                                                                                         })), (function (result) {
                                                                                       Zora.optionSome(t, result, (function (t, friend) {
                                                                                               t.equal(friend.name, "Chris", "Returned friend should have same name");
                                                                                               t.equal(friend.color, "Purple", "Returned friend should have same color");
                                                                                               
                                                                                             }));
-                                                                                      return Table.getByCriteria(friends, {
-                                                                                                  name: "Chris"
-                                                                                                });
+                                                                                      return Table.getById(friends, 5);
                                                                                     })), (function (result) {
-                                                                                  Zora.optionSome(t, result, (function (t, friend) {
-                                                                                          t.equal(friend.name, "Chris", "Returned friend should have same name");
-                                                                                          t.equal(friend.color, "Purple", "Returned friend should have same color");
-                                                                                          
-                                                                                        }));
-                                                                                  return Table.getById(friends, 5);
+                                                                                  Zora.optionNone(t, result, "result should be none");
+                                                                                  return Table.getByCriteria(friends, {
+                                                                                              name: "nobody"
+                                                                                            });
                                                                                 })), (function (result) {
                                                                               Zora.optionNone(t, result, "result should be none");
-                                                                              return Table.getByCriteria(friends, {
-                                                                                          name: "nobody"
+                                                                              Table.add(friends, {
+                                                                                    id: undefined,
+                                                                                    name: "Sam",
+                                                                                    color: "Blue"
+                                                                                  });
+                                                                              return Table.put(friends, {
+                                                                                          id: 3,
+                                                                                          name: "Jess",
+                                                                                          color: "Red"
                                                                                         });
-                                                                            })), (function (result) {
-                                                                          Zora.optionNone(t, result, "result should be none");
-                                                                          Table.add(friends, {
-                                                                                id: undefined,
-                                                                                name: "Sam",
-                                                                                color: "Blue"
-                                                                              });
-                                                                          return Table.put(friends, {
-                                                                                      id: 3,
-                                                                                      name: "Jess",
-                                                                                      color: "Red"
-                                                                                    });
-                                                                        })), (function (id) {
-                                                                      t.equal(id, 3, "Should have added a third friend");
-                                                                      return Table.getById(friends, 3);
-                                                                    })), (function (result) {
-                                                                  Zora.optionSome(t, result, (function (t, friend) {
-                                                                          t.equal(friend.name, "Jess", "Name should be what was set");
-                                                                          t.equal(friend.color, "Red", "Color should be what was set");
-                                                                          
-                                                                        }));
-                                                                  return Table.put(friends, {
-                                                                              id: 3,
-                                                                              name: "Jess",
-                                                                              color: "Blue"
-                                                                            });
-                                                                })), (function (id) {
-                                                              t.equal(id, 3, "Should have updated the third friend");
-                                                              return Table.getById(friends, 3);
-                                                            })), (function (result) {
-                                                          Zora.optionSome(t, result, (function (t, friend) {
-                                                                  t.equal(friend.name, "Jess", "Name should not have changed");
-                                                                  t.equal(friend.color, "Blue", "Color should have changed");
-                                                                  
-                                                                }));
-                                                          return Table.$$delete(friends, 1);
-                                                        })), (function (param) {
-                                                      return Table.count(friends);
-                                                    })), (function (count) {
-                                                  t.equal(count, 2, "Should now have two entries");
-                                                  return Table.put(friends, {
-                                                              id: undefined,
-                                                              name: "Nora",
-                                                              color: "Red"
+                                                                            })), (function (id) {
+                                                                          t.equal(id, 3, "Should have added a third friend");
+                                                                          return Table.getById(friends, 3);
+                                                                        })), (function (result) {
+                                                                      Zora.optionSome(t, result, (function (t, friend) {
+                                                                              t.equal(friend.name, "Jess", "Name should be what was set");
+                                                                              t.equal(friend.color, "Red", "Color should be what was set");
+                                                                              
+                                                                            }));
+                                                                      return Table.put(friends, {
+                                                                                  id: 3,
+                                                                                  name: "Jess",
+                                                                                  color: "Blue"
+                                                                                });
+                                                                    })), (function (id) {
+                                                                  t.equal(id, 3, "Should have updated the third friend");
+                                                                  return Table.getById(friends, 3);
+                                                                })), (function (result) {
+                                                              Zora.optionSome(t, result, (function (t, friend) {
+                                                                      t.equal(friend.name, "Jess", "Name should not have changed");
+                                                                      t.equal(friend.color, "Blue", "Color should have changed");
+                                                                      
+                                                                    }));
+                                                              return Table.$$delete(friends, 1);
+                                                            })), (function (param) {
+                                                          return Table.count(friends);
+                                                        })), (function (count) {
+                                                      t.equal(count, 2, "Should now have two entries");
+                                                      return Table.put(friends, {
+                                                                  id: undefined,
+                                                                  name: "Nora",
+                                                                  color: "Red"
+                                                                });
+                                                    })), (function (id) {
+                                                  t.equal(id, 4, "Should successfully add and increment id with put");
+                                                  return Table.update(friends, 4, {
+                                                              color: "Purple"
                                                             });
-                                                })), (function (id) {
-                                              t.equal(id, 4, "Should successfully add and increment id with put");
-                                              return Table.update(friends, 4, {
-                                                          color: "Purple"
-                                                        });
-                                            })), (function (updated) {
-                                          t.equal(updated, 1, "Should have updated one row");
-                                          return Table.getById(friends, 4);
-                                        })), (function (result) {
-                                      Zora.optionSome(t, result, (function (t, friend) {
-                                              t.equal(friend.color, "Purple", "Color should have changed");
-                                              
-                                            }));
-                                      return Table.findeByCriteria(friends, {
-                                                  color: "Purple"
-                                                });
-                                    })), (function (prim) {
-                                  return prim.toArray();
-                                })), (function (result) {
-                              t.equal(result.length, 1, "Should be one #Purple person in array");
+                                                })), (function (updated) {
+                                              t.equal(updated, 1, "Should have updated one row");
+                                              return Table.getById(friends, 4);
+                                            })), (function (result) {
+                                          Zora.optionSome(t, result, (function (t, friend) {
+                                                  t.equal(friend.color, "Purple", "Color should have changed");
+                                                  
+                                                }));
+                                          return Table.findeByCriteria(friends, {
+                                                      color: "Purple"
+                                                    });
+                                        })), (function (prim) {
+                                      return prim.toArray();
+                                    })), (function (result) {
+                                  t.equal(result.length, 1, "Should be one #Purple person in array");
+                                  return Table.where(friends, "name").equals("Jess").toArray();
+                                })), (function (array) {
+                              t.equal(array, [{
+                                      id: 3,
+                                      name: "Jess",
+                                      color: "Blue"
+                                    }], "Should have the one matching element");
                               
                             }));
               }));

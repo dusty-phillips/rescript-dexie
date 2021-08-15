@@ -24,4 +24,4 @@ let put: (t<'item, 'id>, 'item) => Promise.t<'id>
 
 let update: (t<'item, 'id>, 'id, Js.t<'a>) => Promise.t<int>
 
-// TODO: Where clause
+let where: (t<'item, 'id>, string) => Where.t<'item>
