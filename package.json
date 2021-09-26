@@ -4,8 +4,9 @@
   "scripts": {
     "build": "rescript build",
     "clean": "rescript clean",
-    "test": "pta 'tests/*.test.mjs'",
-    "test:watch": "npx onchange --initial '{tests,src}/*.mjs' -- pta 'tests/*.test.mjs'",
+    "format": "rescript format",
+    "test": "tests/pretty.sh",
+    "test:watch": "onchange --initial '{tests,src}/*.mjs' -- tests/pretty.sh",
     "watch": "rescript build -w"
   },
   "keywords": [
@@ -14,11 +15,12 @@
   "author": "",
   "license": "MIT",
   "devDependencies": {
-    "@dusty-phillips/rescript-zora": "^2.0.0",
+    "@dusty-phillips/rescript-zora": "^3.0.0",
     "fake-indexeddb": "^3.1.3",
     "onchange": "^7.1.0",
     "pta": "^1.0.0",
     "rescript": "^9.1.4",
+    "tap-diff": "^0.1.1",
     "zora": "^5.0.0"
   },
   "dependencies": {
