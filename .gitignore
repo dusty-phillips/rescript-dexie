@@ -32,3 +32,5 @@ lib/bs
 !.yarn/sdks
 !.yarn/versions
 .pnp.*
+
+.yarn/releases/yarn-1.23.0-20210726.1745.cjs

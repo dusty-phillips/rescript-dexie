@@ -19,3 +19,10 @@ Most CRUD-type operations can be executed on a Dexie database.
 - None of the DBCore operations -- it's not possible to make a Dexie middleware yet.
 - Advanced stuff such as hooks and syncables
 - React live query hooks
+
+## Releasing
+
+This is for my reference
+
+- update the version in `bsconfig.json`
+- `npx np`
