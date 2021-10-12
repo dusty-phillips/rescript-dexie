@@ -1,0 +1,17 @@
+{
+  "name": "react example",
+  "version": "0.0.1",
+  "sources": {
+    "dir": "src",
+    "subdirs": true
+  },
+  "package-specs": {
+    "module": "es6-global",
+    "in-source": true
+  },
+  "suffix": ".mjs",
+  "bs-dependencies": [],
+  "warnings": {
+    "error": "+101"
+  }
+}
