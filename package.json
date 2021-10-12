@@ -20,11 +20,11 @@
     "onchange": "^7.1.0",
     "pta": "^1.0.0",
     "rescript": "^9.1.4",
-    "tap-diff": "^0.1.1",
+    "tap-diff2": "^0.2.3",
     "zora": "^5.0.0"
   },
   "dependencies": {
     "@ryyppy/rescript-promise": "^2.1.0",
-    "dexie": "^3.0.3"
+    "dexie": "^3.2.0-rc.2"
   }
 }

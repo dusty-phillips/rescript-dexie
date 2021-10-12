@@ -4,8 +4,14 @@ import * as Curry from "rescript/lib/es6/curry.js";
 import * as Table from "../src/Table.mjs";
 import Dexie from "dexie";
 import * as DexieVersion from "../src/DexieVersion.mjs";
-import FDBFactoryJs from "fake-indexeddb/lib/FDBFactory.js";
-import FDBKeyRangeJs from "fake-indexeddb/lib/FDBKeyRange.js";
+
+// I couldn't figure out how to do this in Rescript and practicality beats purity
+import indexedDB from "fake-indexeddb";
+import IDBKeyRange from "fake-indexeddb/lib/FDBKeyRange.js";
+
+Dexie.dependencies.indexedDB = indexedDB;
+Dexie.dependencies.IDBKeyRange = IDBKeyRange;
+;
 
 function p(prim0, prim1) {
   return prim0.then(Curry.__1(prim1));
@@ -16,11 +22,9 @@ function pt(prim0, prim1) {
 }
 
 function setup(param) {
-  var idb = new FDBFactoryJs();
-  var dexie = new Dexie("hello dexie", {
-        indexedDB: idb,
-        IDBKeyRange: FDBKeyRangeJs
-      });
+  var someNumber = Math.random().toString();
+  console.log(someNumber);
+  var dexie = new Dexie("hello dexie " + someNumber);
   var schema = [
     [
       "friends",
@@ -94,4 +98,4 @@ export {
   friendFixture ,
   
 }
-/* dexie Not a pure module */
+/*  Not a pure module */

@@ -1,11 +1,14 @@
-type fakeIndexedDb
+%%raw(`
+// I couldn't figure out how to do this in Rescript and practicality beats purity
+import indexedDB from "fake-indexeddb";
+import IDBKeyRange from "fake-indexeddb/lib/FDBKeyRange.js";
 
+Dexie.dependencies.indexedDB = indexedDB;
+Dexie.dependencies.IDBKeyRange = IDBKeyRange;
+`)
+@scope("Math") @val external random: unit => float = "random"
 let p = Promise.then
 let pt = Promise.thenResolve
-
-@module("fake-indexeddb/lib/FDBKeyRange.js") external fIDBKeyRange: 'keyrange = "default"
-@new @module("fake-indexeddb/lib/FDBFactory.js")
-external fdbFactory: unit => fakeIndexedDb = "default"
 
 type friend = {
   id: option<int>,
@@ -14,8 +17,9 @@ type friend = {
 }
 
 let setup = () => {
-  let idb = fdbFactory()
-  let dexie = Dexie.make("hello dexie", ~options={"indexedDB": idb, "IDBKeyRange": fIDBKeyRange})
+  let someNumber = random()->Js.Float.toString
+  Js.log(someNumber)
+  let dexie = Dexie.make(`hello dexie ${someNumber}`)
   let schema = [("friends", "++id,name,birthdate,color"), ("pets", "++id,name,kind")]
   dexie
   ->Dexie.version(1)
