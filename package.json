@@ -1,6 +1,6 @@
 {
   "name": "@dusty-phillips/rescript-dexie",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "scripts": {
     "build": "rescript build",
     "clean": "rescript clean",
