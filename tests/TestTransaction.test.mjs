@@ -37,7 +37,7 @@ Zora$1.test("Transactions", (function (t) {
                                 })), (function (error) {
                               if (error.RE_EXN_ID === $$Promise.JsError) {
                                 Zora.optionSome(t, error._1.name, (function (t, name) {
-                                        t.equal(name, "AbortError", "should catch abourtError");
+                                        t.equal(name, "AbortError", "should catch abortError");
                                         
                                       }));
                               } else {

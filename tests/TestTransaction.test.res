@@ -33,7 +33,7 @@ zoraBlock("Transactions", t => {
       switch error {
       | Promise.JsError(ex) =>
         t->optionSome(ex->Js.Exn.name, (t, name) =>
-          t->equal(name, "AbortError", "should catch abourtError")
+          t->equal(name, "AbortError", "should catch abortError")
         )
       | _ => t->fail("Received incorrect error")
       }
