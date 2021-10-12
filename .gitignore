@@ -18,19 +18,20 @@
 *.annot
 *.cmj
 *.bak
-lib/bs
+**/lib/bs
 *.mlast
 *.mliast
 .vscode
 .merlin
 .bsb.lock
-/node_modules/
+**/node_modules/
 .yarn/*
 !.yarn/patches
 !.yarn/releases
 !.yarn/plugins
 !.yarn/sdks
 !.yarn/versions
+**/yarn-error.log
 .pnp.*
 
 .yarn/releases/yarn-1.23.0-20210726.1745.cjs

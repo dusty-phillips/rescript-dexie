@@ -1,5 +1,5 @@
 {
-  "name": "react example",
+  "name": "reactexample",
   "version": "0.0.1",
   "sources": {
     "dir": "src",
@@ -10,8 +10,13 @@
     "in-source": true
   },
   "suffix": ".mjs",
-  "bs-dependencies": [],
+  "bs-dependencies": [
+    "@rescript/react",
+    "@dusty-phillips/rescript-dexie",
+    "@ryyppy/rescript-promise"
+  ],
   "warnings": {
     "error": "+101"
-  }
+  },
+  "reason": { "react-jsx": 3 }
 }
