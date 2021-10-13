@@ -1,3 +1,8 @@
+// if the `dexie-react-hooks` optional dependency is installed, these bindings
+// will work.
+//
+// See `examples/react/src/Demo.res` for an example of how to use them.
+
 @module("dexie-react-hooks")
 external use0: (unit => Promise.t<option<'a>>) => option<'a> = "useLiveQuery"
 @module("dexie-react-hooks")
