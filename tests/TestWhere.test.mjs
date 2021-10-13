@@ -9,21 +9,20 @@ import * as TestSetup$Dexie from "./TestSetup.mjs";
 Zora$1.test("Where clauses", (function (t) {
         var dexie = TestSetup$Dexie.setup(undefined);
         return TestSetup$Dexie.p(TestSetup$Dexie.friendFixture(dexie), (function (param) {
-                      var friends = Curry._1(TestSetup$Dexie.Friend.table, dexie);
-                      return TestSetup$Dexie.p(TestSetup$Dexie.p(TestSetup$Dexie.p(TestSetup$Dexie.p(TestSetup$Dexie.p(TestSetup$Dexie.p(TestSetup$Dexie.p(TestSetup$Dexie.p(TestSetup$Dexie.p(TestSetup$Dexie.p(TestSetup$Dexie.p(TestSetup$Dexie.p(TestSetup$Dexie.p(TestSetup$Dexie.p(TestSetup$Dexie.p(TestSetup$Dexie.p(friends.where("name").equals("Chris").toArray(), (function (chris) {
+                      return TestSetup$Dexie.p(TestSetup$Dexie.p(TestSetup$Dexie.p(TestSetup$Dexie.p(TestSetup$Dexie.p(TestSetup$Dexie.p(TestSetup$Dexie.p(TestSetup$Dexie.p(TestSetup$Dexie.p(TestSetup$Dexie.p(TestSetup$Dexie.p(TestSetup$Dexie.p(TestSetup$Dexie.p(TestSetup$Dexie.p(TestSetup$Dexie.p(TestSetup$Dexie.p(Curry._2(TestSetup$Dexie.Friend.where, dexie, "name").equals("Chris").toArray(), (function (chris) {
                                                                                                 t.equal(chris, [{
                                                                                                         id: 1,
                                                                                                         name: "Chris",
                                                                                                         color: "Red"
                                                                                                       }], "should be Chris");
-                                                                                                return friends.where("name").equalsIgnoreCase("chris").toArray();
+                                                                                                return Curry._2(TestSetup$Dexie.Friend.where, dexie, "name").equalsIgnoreCase("chris").toArray();
                                                                                               })), (function (chris) {
                                                                                             t.equal(chris, [{
                                                                                                     id: 1,
                                                                                                     name: "Chris",
                                                                                                     color: "Red"
                                                                                                   }], "should be Chris");
-                                                                                            return friends.where("id").above(5).toArray();
+                                                                                            return Curry._2(TestSetup$Dexie.Friend.where, dexie, "id").above(5).toArray();
                                                                                           })), (function (items) {
                                                                                         t.equal(items, [
                                                                                               {
@@ -42,7 +41,7 @@ Zora$1.test("Where clauses", (function (t) {
                                                                                                 color: "Purple"
                                                                                               }
                                                                                             ], "Should have the last three items");
-                                                                                        return friends.where("id").aboveOrEqual(6).toArray();
+                                                                                        return Curry._2(TestSetup$Dexie.Friend.where, dexie, "id").aboveOrEqual(6).toArray();
                                                                                       })), (function (items) {
                                                                                     t.equal(items, [
                                                                                           {
@@ -61,7 +60,7 @@ Zora$1.test("Where clauses", (function (t) {
                                                                                             color: "Purple"
                                                                                           }
                                                                                         ], "Should have the last three items");
-                                                                                    return friends.where("id").below(3).toArray();
+                                                                                    return Curry._2(TestSetup$Dexie.Friend.where, dexie, "id").below(3).toArray();
                                                                                   })), (function (items) {
                                                                                 t.equal(items, [
                                                                                       {
@@ -75,7 +74,7 @@ Zora$1.test("Where clauses", (function (t) {
                                                                                         color: "Blue"
                                                                                       }
                                                                                     ], "Should have the first two items");
-                                                                                return friends.where("id").belowOrEqual(2).toArray();
+                                                                                return Curry._2(TestSetup$Dexie.Friend.where, dexie, "id").belowOrEqual(2).toArray();
                                                                               })), (function (items) {
                                                                             t.equal(items, [
                                                                                   {
@@ -89,7 +88,7 @@ Zora$1.test("Where clauses", (function (t) {
                                                                                     color: "Blue"
                                                                                   }
                                                                                 ], "Should have the first two items");
-                                                                            return friends.where("name").anyOf([
+                                                                            return Curry._2(TestSetup$Dexie.Friend.where, dexie, "name").anyOf([
                                                                                           "Leroy",
                                                                                           "Rohan"
                                                                                         ]).toArray();
@@ -106,7 +105,7 @@ Zora$1.test("Where clauses", (function (t) {
                                                                                 color: "Red"
                                                                               }
                                                                             ], "Should have the two selected items");
-                                                                        return friends.where("name").anyOfIgnoreCase([
+                                                                        return Curry._2(TestSetup$Dexie.Friend.where, dexie, "name").anyOfIgnoreCase([
                                                                                       "leRoy",
                                                                                       "roHan"
                                                                                     ]).toArray();
@@ -123,24 +122,24 @@ Zora$1.test("Where clauses", (function (t) {
                                                                             color: "Red"
                                                                           }
                                                                         ], "Should have the two selected items");
-                                                                    return friends.where("name").notEqual("Rohan").toArray();
+                                                                    return Curry._2(TestSetup$Dexie.Friend.where, dexie, "name").notEqual("Rohan").toArray();
                                                                   })), (function (items) {
                                                                 t.equal(items.length, 7, "should only contain 7 items");
-                                                                return friends.where("name").noneOf([
+                                                                return Curry._2(TestSetup$Dexie.Friend.where, dexie, "name").noneOf([
                                                                               "Rohan",
                                                                               "Chris",
                                                                               "Natalia"
                                                                             ]).toArray();
                                                               })), (function (items) {
                                                             t.equal(items.length, 5, "should only contain 5 items");
-                                                            return friends.where("name").startsWith("Le").toArray();
+                                                            return Curry._2(TestSetup$Dexie.Friend.where, dexie, "name").startsWith("Le").toArray();
                                                           })), (function (items) {
                                                         t.equal(items, [{
                                                                 id: 2,
                                                                 name: "Leroy",
                                                                 color: "Blue"
                                                               }], "Should start with Le");
-                                                        return friends.where("name").startsWithAnyOf([
+                                                        return Curry._2(TestSetup$Dexie.Friend.where, dexie, "name").startsWithAnyOf([
                                                                       "Le",
                                                                       "Na"
                                                                     ]).toArray();
@@ -157,14 +156,14 @@ Zora$1.test("Where clauses", (function (t) {
                                                             color: "Red"
                                                           }
                                                         ], "Should start with Le and Na");
-                                                    return friends.where("name").startsWithIgnoreCase("le").toArray();
+                                                    return Curry._2(TestSetup$Dexie.Friend.where, dexie, "name").startsWithIgnoreCase("le").toArray();
                                                   })), (function (items) {
                                                 t.equal(items, [{
                                                         id: 2,
                                                         name: "Leroy",
                                                         color: "Blue"
                                                       }], "Should start with Le");
-                                                return friends.where("name").startsWithAnyOfIgnoreCase([
+                                                return Curry._2(TestSetup$Dexie.Friend.where, dexie, "name").startsWithAnyOfIgnoreCase([
                                                               "le",
                                                               "na"
                                                             ]).toArray();
@@ -181,7 +180,7 @@ Zora$1.test("Where clauses", (function (t) {
                                                     color: "Red"
                                                   }
                                                 ], "Should start with le and na");
-                                            return Where$Dexie.inAnyRange(friends.where("name"), undefined, [[
+                                            return Where$Dexie.inAnyRange(Curry._2(TestSetup$Dexie.Friend.where, dexie, "name"), undefined, [[
                                                             "Le",
                                                             "Op"
                                                           ]]).toArray();
@@ -198,7 +197,7 @@ Zora$1.test("Where clauses", (function (t) {
                                                 color: "Red"
                                               }
                                             ], "Should be in range");
-                                        return Where$Dexie.inAnyRange(friends.where("id"), {
+                                        return Where$Dexie.inAnyRange(Curry._2(TestSetup$Dexie.Friend.where, dexie, "id"), {
                                                       includeLowers: false,
                                                       includeUppers: true
                                                     }, [

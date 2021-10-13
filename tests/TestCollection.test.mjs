@@ -18,7 +18,7 @@ Zora$1.test("Collection", (function (t) {
                 var dexie = TestSetup$Dexie.setup(undefined);
                 var prim0 = TestSetup$Dexie.friendFixture(dexie);
                 var prim0$1 = prim0.then(function (param) {
-                      return Curry._1(TestSetup$Dexie.Friend.table, dexie).where({
+                      return Curry._2(TestSetup$Dexie.Friend.findByCriteria, dexie, {
                                   color: "Purple"
                                 });
                     });
@@ -113,15 +113,12 @@ Zora$1.test("Collection", (function (t) {
                 t.test("delete function", (function (t) {
                         var dexie = TestSetup$Dexie.setup(undefined);
                         var prim0 = TestSetup$Dexie.friendFixture(dexie);
-                        var prim0$1 = prim0.then(function (param) {
-                              return Curry._1(TestSetup$Dexie.Friend.table, dexie);
-                            });
-                        return prim0$1.then(function (friends) {
-                                    var prim0 = friends.where({
+                        return prim0.then(function (param) {
+                                    var prim0 = Curry._2(TestSetup$Dexie.Friend.findByCriteria, dexie, {
                                             color: "Purple"
                                           }).delete();
                                     var prim0$1 = prim0.then(function (param) {
-                                          return friends.count();
+                                          return Curry._1(TestSetup$Dexie.Friend.count, dexie);
                                         });
                                     return prim0$1.then(function (count) {
                                                 t.equal(count, 5, "Should be down to 5 friends");
@@ -132,24 +129,21 @@ Zora$1.test("Collection", (function (t) {
                 t.test("modify function", (function (t) {
                         var dexie = TestSetup$Dexie.setup(undefined);
                         var prim0 = TestSetup$Dexie.friendFixture(dexie);
-                        var prim0$1 = prim0.then(function (param) {
-                              return Curry._1(TestSetup$Dexie.Friend.table, dexie);
-                            });
-                        return prim0$1.then(function (friends) {
-                                    var prim0 = friends.where({
+                        return prim0.then(function (param) {
+                                    var prim0 = Curry._2(TestSetup$Dexie.Friend.findByCriteria, dexie, {
                                             color: "Purple"
                                           }).modify({
                                           color: "Blue"
                                         });
                                     var prim0$1 = prim0.then(function (num_changed) {
                                           t.equal(num_changed, 3, "Should have changed all three items");
-                                          return friends.where({
+                                          return Curry._2(TestSetup$Dexie.Friend.findByCriteria, dexie, {
                                                         color: "Blue"
                                                       }).count();
                                         });
                                     var prim0$2 = prim0$1.then(function (count) {
                                           t.equal(count, 5, "Should now have five frineds who chose blue");
-                                          return friends.where({
+                                          return Curry._2(TestSetup$Dexie.Friend.findByCriteria, dexie, {
                                                         color: "Purple"
                                                       }).count();
                                         });
@@ -164,11 +158,8 @@ Zora$1.test("Collection", (function (t) {
         t.test("Collection operation functions (they return self)", (function (t) {
                 var dexie = TestSetup$Dexie.setup(undefined);
                 var prim0 = TestSetup$Dexie.friendFixture(dexie);
-                var prim0$1 = prim0.then(function (param) {
-                      return Curry._1(TestSetup$Dexie.Friend.table, dexie);
-                    });
-                return prim0$1.then(function (friends) {
-                            var prim0 = Curry._2(TestSetup$Dexie.Friend.bulkPut, friends, [
+                return prim0.then(function (param) {
+                            var prim0 = Curry._2(TestSetup$Dexie.Friend.bulkPut, dexie, [
                                   {
                                     id: 9,
                                     name: "Padma",
@@ -181,7 +172,7 @@ Zora$1.test("Collection", (function (t) {
                                   }
                                 ]);
                             var prim0$1 = prim0.then(function (param) {
-                                  return friends.where({
+                                  return Curry._2(TestSetup$Dexie.Friend.findByCriteria, dexie, {
                                               color: "Purple"
                                             });
                                 });

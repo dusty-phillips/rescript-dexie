@@ -41,9 +41,7 @@ let setup = () => {
 }
 
 let friendFixture = dexie => {
-  dexie
-  ->Friend.table
-  ->Friend.bulkPut([
+  dexie->Friend.bulkPut([
     {id: Some(1), name: "Chris", color: #Red},
     {id: Some(2), name: "Leroy", color: #Blue},
     {id: Some(3), name: "Jerome", color: #Purple},

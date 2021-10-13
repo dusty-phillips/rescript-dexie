@@ -9,7 +9,7 @@ zora("Collection", t => {
     let dexie = setup()
     dexie
     ->friendFixture
-    ->pt(_ => dexie->Friend.table->Friend.findeByCriteria({"color": #Purple}))
+    ->pt(_ => dexie->Friend.findByCriteria({"color": #Purple}))
     ->p(collection => {
       t->test("count function", t =>
         collection
@@ -80,12 +80,11 @@ zora("Collection", t => {
 
       dexie
       ->friendFixture
-      ->pt(_ => dexie->Friend.table)
-      ->p(friends => {
-        friends
-        ->Friend.findeByCriteria({"color": #Purple})
+      ->p(_ => {
+        dexie
+        ->Friend.findByCriteria({"color": #Purple})
         ->Collection.delete
-        ->p(_ => friends->Friend.count)
+        ->p(_ => dexie->Friend.count)
         ->pt(count => t->equal(count, 5, "Should be down to 5 friends"))
       })
     })
@@ -93,18 +92,17 @@ zora("Collection", t => {
       let dexie = setup()
       dexie
       ->friendFixture
-      ->pt(_ => dexie->Friend.table)
-      ->p(friends => {
-        friends
-        ->Friend.findeByCriteria({"color": #Purple})
+      ->p(_ => {
+        dexie
+        ->Friend.findByCriteria({"color": #Purple})
         ->Collection.modify({"color": #Blue})
         ->p(num_changed => {
           t->equal(num_changed, 3, "Should have changed all three items")
-          friends->Friend.findeByCriteria({"color": #Blue})->Collection.count
+          dexie->Friend.findByCriteria({"color": #Blue})->Collection.count
         })
         ->p(count => {
           t->equal(count, 5, "Should now have five frineds who chose blue")
-          friends->Friend.findeByCriteria({"color": #Purple})->Collection.count
+          dexie->Friend.findByCriteria({"color": #Purple})->Collection.count
         })
         ->pt(count => t->equal(count, 0, "Should not be any friends who chose purple"))
       })
@@ -115,14 +113,13 @@ zora("Collection", t => {
     let dexie = setup()
     dexie
     ->friendFixture
-    ->pt(_ => dexie->Friend.table)
-    ->p(friends =>
-      friends
+    ->p(_ =>
+      dexie
       ->Friend.bulkPut([
         {id: Some(9), name: "Padma", color: #Purple},
         {id: Some(10), name: "Leroy", color: #Blue},
       ])
-      ->pt(_ => friends->Friend.findeByCriteria({"color": #Purple}))
+      ->pt(_ => dexie->Friend.findByCriteria({"color": #Purple}))
       ->p(collection => {
         t->test("Filter function", t =>
           collection

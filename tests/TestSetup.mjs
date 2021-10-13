@@ -48,7 +48,7 @@ function setup(param) {
 }
 
 function friendFixture(dexie) {
-  return Curry._2(Friend.bulkPut, Curry._1(Friend.table, dexie), [
+  return Curry._2(Friend.bulkPut, dexie, [
               {
                 id: 1,
                 name: "Chris",

@@ -2,23 +2,63 @@
 
 
 function MakeTable(Schema) {
-  var bulkAdd = function (table, items) {
-    return table.bulkAdd(items, {
+  var add = function (dexie, item) {
+    return dexie.table(Schema.tableName).add(item);
+  };
+  var bulkAdd = function (dexie, items) {
+    return dexie.table(Schema.tableName).bulkAdd(items, {
                 allKeys: true
               });
   };
-  var bulkPut = function (table, items) {
-    return table.bulkPut(items, {
+  var bulkPut = function (dexie, items) {
+    return dexie.table(Schema.tableName).bulkPut(items, {
                 allKeys: true
               });
   };
-  var table = function (database) {
-    return database.table(Schema.tableName);
+  var bulkDelete = function (dexie, items) {
+    return dexie.table(Schema.tableName).bulkDelete(items);
+  };
+  var bulkGet = function (dexie, ids) {
+    return dexie.table(Schema.tableName).bulkGet(ids);
+  };
+  var count = function (dexie) {
+    return dexie.table(Schema.tableName).count();
+  };
+  var $$delete = function (dexie, id) {
+    return dexie.table(Schema.tableName).delete(id);
+  };
+  var findByCriteria = function (dexie, criteria) {
+    return dexie.table(Schema.tableName).where(criteria);
+  };
+  var getById = function (dexie, id) {
+    return dexie.table(Schema.tableName).get(id);
+  };
+  var getByCriteria = function (dexie, criteria) {
+    return dexie.table(Schema.tableName).get(criteria);
+  };
+  var put = function (dexie, item) {
+    return dexie.table(Schema.tableName).put(item);
+  };
+  var update = function (dexie, id, patch) {
+    return dexie.table(Schema.tableName).update(id, patch);
+  };
+  var where = function (dexie, fieldName) {
+    return dexie.table(Schema.tableName).where(fieldName);
   };
   return {
+          add: add,
           bulkAdd: bulkAdd,
           bulkPut: bulkPut,
-          table: table
+          bulkDelete: bulkDelete,
+          bulkGet: bulkGet,
+          count: count,
+          $$delete: $$delete,
+          findByCriteria: findByCriteria,
+          getById: getById,
+          getByCriteria: getByCriteria,
+          put: put,
+          update: update,
+          where: where
         };
 }
 

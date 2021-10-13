@@ -12,14 +12,13 @@ var MyError = /* @__PURE__ */Caml_exceptions.create("TestTransaction.MyError");
 Zora$1.test("Transactions", (function (t) {
         t.test("Open transaction", (function (t) {
                 var dexie = TestSetup$Dexie.setup(undefined);
-                return dexie.transaction("rw", ["friends"], (function (tx) {
-                              var friends = Curry._1(TestSetup$Dexie.Friend.table, dexie);
-                              TestSetup$Dexie.pt(TestSetup$Dexie.p(friends.add({
+                return dexie.transaction("rw", ["friends"], (function (_tx) {
+                              TestSetup$Dexie.pt(TestSetup$Dexie.p(Curry._2(TestSetup$Dexie.Friend.add, dexie, {
                                             id: undefined,
                                             name: "Chris",
                                             color: "Red"
                                           }), (function (id) {
-                                          return friends.get(id);
+                                          return Curry._2(TestSetup$Dexie.Friend.getById, dexie, id);
                                         })), (function (result) {
                                       return Zora.optionSome(t, result, (function (t, friend) {
                                                     t.equal(friend.name, "Chris", "Friend should be added in transaction");
