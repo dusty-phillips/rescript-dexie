@@ -7,7 +7,7 @@ zoraBlock("Transactions", t => {
   t->test("Open transaction", t => {
     let dexie = setup()
 
-    dexie->Dexie.transaction(#rw, ["friends"], tx => {
+    dexie->Database.transaction(#rw, ["friends"], tx => {
       let friends = tx->Transaction.table("friends")
 
       friends
@@ -26,7 +26,7 @@ zoraBlock("Transactions", t => {
     let dexie = setup()
 
     dexie
-    ->Dexie.transaction(#rw, ["friends"], tx => {
+    ->Database.transaction(#rw, ["friends"], tx => {
       tx->Transaction.abort
     })
     ->Promise.catch(error => {

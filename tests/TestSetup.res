@@ -19,24 +19,24 @@ type friend = {
 let setup = () => {
   let someNumber = random()->Js.Float.toString
   Js.log(someNumber)
-  let dexie = Dexie.make(`hello dexie ${someNumber}`)
+  let dexie = Database.make(`hello dexie ${someNumber}`)
   let schema = [("friends", "++id,name,birthdate,color"), ("pets", "++id,name,kind")]
   dexie
-  ->Dexie.version(1)
-  ->DexieVersion.stores(schema)
-  ->DexieVersion.upgrade(_tx => {
+  ->Database.version(1)
+  ->Version.stores(schema)
+  ->Version.upgrade(_tx => {
     // Show the upgrade function is bound, because we don't test that anywhere
     let _ = 365 * 24 * 60 * 60 * 1000
   })
   ->ignore
 
-  dexie->Dexie.opendb->ignore
+  dexie->Database.opendb->ignore
 
   dexie
 }
 
 let friendFixture = dexie => {
-  let friends: Table.t<friend, int> = dexie->Dexie.table("friends")
+  let friends: Table.t<friend, int> = dexie->Database.table("friends")
   friends
   ->Table.bulkPut([
     {id: Some(1), name: "Chris", color: #Red},

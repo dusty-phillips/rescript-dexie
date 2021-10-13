@@ -15,4 +15,4 @@ external transaction: (
   Transaction.callback,
 ) => Promise.t<'result> = "transaction"
 
-@send external version: (t, int) => DexieVersion.t = "version"
+@send external version: (t, int) => Version.t = "version"

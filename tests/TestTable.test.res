@@ -5,7 +5,7 @@ zora("Table commands", t => {
   t->test("Test basic methods", t => {
     let dexie = setup()
 
-    let friends: Table.t<friend, int> = dexie->Dexie.table("friends")
+    let friends: Table.t<friend, int> = dexie->Database.table("friends")
     t->equal(friends.name, "friends", "Table name should be `friends`")
 
     friends
@@ -107,7 +107,7 @@ zora("Table commands", t => {
 
   t->test("Test bulk methods", t => {
     let dexie = setup()
-    let friends: Table.t<friend, int> = dexie->Dexie.table("friends")
+    let friends: Table.t<friend, int> = dexie->Database.table("friends")
 
     friends
     ->Table.bulkAdd([

@@ -2,24 +2,24 @@
 
 import * as Zora from "@dusty-phillips/rescript-zora/src/Zora.mjs";
 import * as Zora$1 from "zora";
-import * as Table from "../src/Table.mjs";
 import * as $$Promise from "@ryyppy/rescript-promise/src/Promise.mjs";
-import * as TestSetup from "./TestSetup.mjs";
+import * as Table$Dexie from "../src/Table.mjs";
 import * as Caml_exceptions from "rescript/lib/es6/caml_exceptions.js";
+import * as TestSetup$Dexie from "./TestSetup.mjs";
 
 var MyError = /* @__PURE__ */Caml_exceptions.create("TestTransaction.MyError");
 
 Zora$1.test("Transactions", (function (t) {
         t.test("Open transaction", (function (t) {
-                var dexie = TestSetup.setup(undefined);
+                var dexie = TestSetup$Dexie.setup(undefined);
                 return dexie.transaction("rw", ["friends"], (function (tx) {
                               var friends = tx.table("friends");
-                              TestSetup.pt(TestSetup.p(Table.add(friends, {
+                              TestSetup$Dexie.pt(TestSetup$Dexie.p(Table$Dexie.add(friends, {
                                             id: undefined,
                                             name: "Chris",
                                             color: "Red"
                                           }), (function (id) {
-                                          return Table.getById(friends, id);
+                                          return Table$Dexie.getById(friends, id);
                                         })), (function (result) {
                                       return Zora.optionSome(t, result, (function (t, friend) {
                                                     t.equal(friend.name, "Chris", "Friend should be added in transaction");
@@ -30,7 +30,7 @@ Zora$1.test("Transactions", (function (t) {
                             }));
               }));
         t.test("Abort transaction", (function (t) {
-                var dexie = TestSetup.setup(undefined);
+                var dexie = TestSetup$Dexie.setup(undefined);
                 return $$Promise.$$catch(dexie.transaction("rw", ["friends"], (function (tx) {
                                   tx.abort();
                                   
