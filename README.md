@@ -126,7 +126,16 @@ a better idea of the things you can do with the bindings.
 
 And there is a tiny React app in the [examples/react](examples/react) folder.
 
-## Releasing
+## Contributing
+
+PRs and issues are welcome!
+
+### Testing
+
+I use my [rescript-zora](https://github.com/dusty-phillips/rescript-zora)
+library for testing. `yarn test:watch` should be all you need.
+
+### Releasing
 
 This is for my reference:
 
