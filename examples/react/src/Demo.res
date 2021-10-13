@@ -5,9 +5,9 @@ type count = {
 
 module Counter = {
   @react.component
-  let make = (~dexie: Dexie.t) => {
-    let countOption = LiveQuery.use0(() => {
-      dexie->Dexie.table("count")->Table.getById(1)
+  let make = (~dexie: Dexie.Database.t) => {
+    let countOption = Dexie.LiveQuery.use0(() => {
+      dexie->Dexie.Database.table("count")->Dexie.Table.getById(1)
     })
 
     switch countOption {
@@ -19,7 +19,10 @@ module Counter = {
         <button
           onClick={_ => {
             Js.log(count)
-            dexie->Dexie.table("count")->Table.put({id: Some(1), count: count.count + 1})->ignore
+            dexie
+            ->Dexie.Database.table("count")
+            ->Dexie.Table.put({id: Some(1), count: count.count + 1})
+            ->ignore
           }}>
           {React.string("Count")}
         </button>
@@ -33,11 +36,11 @@ let make = () => {
   let (dexieOption, setDexie) = React.useState(_ => None)
 
   React.useEffect0(() => {
-    let dexie = Dexie.make("Example")
+    let dexie = Dexie.Database.make("Example")
 
     let schema = [("count", "++id")]
 
-    dexie->Dexie.version(1)->DexieVersion.stores(schema)->ignore
+    dexie->Dexie.Database.version(1)->Dexie.Version.stores(schema)->ignore
     setDexie(_prev => Some(dexie))
     None
   })
