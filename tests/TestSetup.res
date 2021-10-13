@@ -18,7 +18,6 @@ type friend = {
 
 let setup = () => {
   let someNumber = random()->Js.Float.toString
-  Js.log(someNumber)
   let dexie = Database.make(`hello dexie ${someNumber}`)
   let schema = [("friends", "++id,name,birthdate,color"), ("pets", "++id,name,kind")]
   dexie
