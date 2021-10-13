@@ -3,11 +3,11 @@
   "version": "0.2.0",
   "scripts": {
     "build": "rescript build",
+    "build:watch": "rescript build -w",
     "clean": "rescript clean",
     "format": "rescript format",
     "test": "tests/pretty.sh",
-    "test:watch": "onchange --initial '{tests,src}/*.mjs' -- tests/pretty.sh",
-    "watch": "rescript build -w"
+    "test:watch": "onchange --initial '{tests,src}/*.mjs' -- tests/pretty.sh"
   },
   "keywords": [
     "ReScript"
