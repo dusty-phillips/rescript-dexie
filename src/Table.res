@@ -1,4 +1,12 @@
-module type MakeTableType = (Schema: Schema.SchemaItem) =>
+type schemaTableName = string
+
+module type SchemaItem = {
+  type t
+  type id
+  let tableName: schemaTableName
+}
+
+module type MakeTableType = (Schema: SchemaItem) =>
 {
   type t = Schema.t
   type id = Schema.id
@@ -17,7 +25,7 @@ module type MakeTableType = (Schema: Schema.SchemaItem) =>
   let where: (Database.t, string) => Where.t<t>
 }
 
-module MakeTable: MakeTableType = (Schema: Schema.SchemaItem) => {
+module MakeTable: MakeTableType = (Schema: SchemaItem) => {
   type t = Schema.t
   type id = Schema.id
 
