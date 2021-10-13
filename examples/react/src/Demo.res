@@ -1,28 +1,39 @@
-type count = {
-  id: option<int>,
-  count: int,
+module CountSchema = {
+  type t = {
+    id: option<int>,
+    count: int,
+  }
+  type id = int
+  let tableName = "count"
 }
+
+module Count = Dexie.Table.MakeTable(CountSchema)
 
 module Counter = {
   @react.component
   let make = (~dexie: Dexie.Database.t) => {
     let countOption = Dexie.LiveQuery.use0(() => {
-      dexie->Dexie.Database.table("count")->Dexie.Table.getById(1)
+      dexie->Count.getById(1)
     })
 
     switch countOption {
-    | None => <div> {React.string(" No count ")} </div>
+    | None =>
+      <div>
+        <button
+          onClick={_ => {
+            dexie->Count.put({id: Some(1), count: 1})->ignore
+          }}>
+          {React.string("Count")}
+        </button>
+        <div> {React.string(" No count ")} </div>
+      </div>
 
     | Some(count) =>
       <div>
         <div> {React.string(`Counter is ${count.count->Js.Int.toString}`)} </div>
         <button
           onClick={_ => {
-            Js.log(count)
-            dexie
-            ->Dexie.Database.table("count")
-            ->Dexie.Table.put({id: Some(1), count: count.count + 1})
-            ->ignore
+            dexie->Count.put({id: Some(1), count: count.count + 1})->ignore
           }}>
           {React.string("Count")}
         </button>

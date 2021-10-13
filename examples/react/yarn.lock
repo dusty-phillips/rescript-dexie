@@ -220,13 +220,15 @@
     "@babel/helper-validator-identifier" "^7.14.9"
     to-fast-properties "^2.0.0"
 
-"@dusty-phillips/rescript-dexie@^0.2.0":
-  version "0.2.0"
-  resolved "https://registry.yarnpkg.com/@dusty-phillips/rescript-dexie/-/rescript-dexie-0.2.0.tgz#dd155c3ae9f26c03ee2baf2280162016983cff3b"
-  integrity sha512-5fbfaLY4olYJIuNj9Y14EQuDpEtnAJFM1I2z93pay2r70ZijEQL7U40IuZ63rf/s7bRaypdxTK3u5zK2jifi0w==
+"@dusty-phillips/rescript-dexie@^0.3.0":
+  version "0.3.0"
+  resolved "https://registry.yarnpkg.com/@dusty-phillips/rescript-dexie/-/rescript-dexie-0.3.0.tgz#ba84b9ab5fe3426c10f9040f3ea6b5849f09627a"
+  integrity sha512-9JAGZMDhl/ZMQkM/Dok1vplBwzRpfg5bNQuZcDYD44Wp3KNX62GhMRK9svfmuDqgIvN/nyfpR4Dv2410SOMf/A==
   dependencies:
     "@ryyppy/rescript-promise" "^2.1.0"
     dexie "^3.2.0-rc.2"
+  optionalDependencies:
+    dexie-react-hooks "^1.0.7"
 
 "@rescript/react@^0.10.3":
   version "0.10.3"

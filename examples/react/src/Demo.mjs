@@ -8,25 +8,38 @@ import * as Table$Dexie from "../node_modules/@dusty-phillips/rescript-dexie/src
 import * as Version$Dexie from "../node_modules/@dusty-phillips/rescript-dexie/src/Version.mjs";
 import * as DexieReactHooks from "dexie-react-hooks";
 
+var CountSchema = {
+  tableName: "count"
+};
+
+var Count = Table$Dexie.MakeTable(CountSchema);
+
 function Demo$Counter(Props) {
   var dexie = Props.dexie;
   var countOption = DexieReactHooks.useLiveQuery(function (param) {
-        return Table$Dexie.getById(dexie.table("count"), 1);
+        return Curry._2(Count.getById, dexie, 1);
       });
-  if (countOption === undefined) {
-    return React.createElement("div", undefined, " No count ");
+  if (countOption !== undefined) {
+    return React.createElement("div", undefined, React.createElement("div", undefined, "Counter is " + countOption.count.toString()), React.createElement("button", {
+                    onClick: (function (param) {
+                        Curry._2(Count.put, dexie, {
+                              id: 1,
+                              count: countOption.count + 1 | 0
+                            });
+                        
+                      })
+                  }, "Count"));
+  } else {
+    return React.createElement("div", undefined, React.createElement("button", {
+                    onClick: (function (param) {
+                        Curry._2(Count.put, dexie, {
+                              id: 1,
+                              count: 1
+                            });
+                        
+                      })
+                  }, "Count"), React.createElement("div", undefined, " No count "));
   }
-  var count = Caml_option.valFromOption(countOption);
-  return React.createElement("div", undefined, React.createElement("div", undefined, "Counter is " + count.count.toString()), React.createElement("button", {
-                  onClick: (function (param) {
-                      console.log(count);
-                      Table$Dexie.put(dexie.table("count"), {
-                            id: 1,
-                            count: count.count + 1 | 0
-                          });
-                      
-                    })
-                }, "Count"));
 }
 
 var Counter = {
@@ -63,8 +76,10 @@ function Demo(Props) {
 var make = Demo;
 
 export {
+  CountSchema ,
+  Count ,
   Counter ,
   make ,
   
 }
-/* dexie Not a pure module */
+/* Count Not a pure module */
