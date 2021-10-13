@@ -3,7 +3,6 @@
 import * as Zora from "@dusty-phillips/rescript-zora/src/Zora.mjs";
 import * as Zora$1 from "zora";
 import * as Curry from "rescript/lib/es6/curry.js";
-import * as Table$Dexie from "../src/Table.mjs";
 import * as TestSetup$Dexie from "./TestSetup.mjs";
 
 function p(prim0, prim1) {
@@ -18,8 +17,8 @@ Zora$1.test("Collection", (function (t) {
         t.test("retreival functions", (function (t) {
                 var dexie = TestSetup$Dexie.setup(undefined);
                 var prim0 = TestSetup$Dexie.friendFixture(dexie);
-                var prim0$1 = prim0.then(function (friends) {
-                      return Table$Dexie.findeByCriteria(friends, {
+                var prim0$1 = prim0.then(function (param) {
+                      return Curry._1(TestSetup$Dexie.Friend.table, dexie).where({
                                   color: "Purple"
                                 });
                     });
@@ -47,23 +46,24 @@ Zora$1.test("Collection", (function (t) {
                             t.test("toArray", (function (t) {
                                     var prim0 = collection.clone().toArray();
                                     return prim0.then(function (array) {
-                                                t.equal(array, [
-                                                      {
-                                                        id: 3,
-                                                        name: "Jerome",
-                                                        color: "Purple"
-                                                      },
-                                                      {
-                                                        id: 4,
-                                                        name: "Betty",
-                                                        color: "Purple"
-                                                      },
-                                                      {
-                                                        id: 8,
-                                                        name: "Padma",
-                                                        color: "Purple"
-                                                      }
-                                                    ], "Should have the three friends that chose purple");
+                                                var expected = [
+                                                  {
+                                                    id: 3,
+                                                    name: "Jerome",
+                                                    color: "Purple"
+                                                  },
+                                                  {
+                                                    id: 4,
+                                                    name: "Betty",
+                                                    color: "Purple"
+                                                  },
+                                                  {
+                                                    id: 8,
+                                                    name: "Padma",
+                                                    color: "Purple"
+                                                  }
+                                                ];
+                                                t.equal(array, expected, "Should have the three friends that chose purple");
                                                 
                                               });
                                   }));
@@ -85,23 +85,24 @@ Zora$1.test("Collection", (function (t) {
                             t.test("sortBy function", (function (t) {
                                     var prim0 = collection.clone().sortBy("name");
                                     return prim0.then(function (array) {
-                                                t.equal(array, [
-                                                      {
-                                                        id: 4,
-                                                        name: "Betty",
-                                                        color: "Purple"
-                                                      },
-                                                      {
-                                                        id: 3,
-                                                        name: "Jerome",
-                                                        color: "Purple"
-                                                      },
-                                                      {
-                                                        id: 8,
-                                                        name: "Padma",
-                                                        color: "Purple"
-                                                      }
-                                                    ], "Array should be sorted by name");
+                                                var expected = [
+                                                  {
+                                                    id: 4,
+                                                    name: "Betty",
+                                                    color: "Purple"
+                                                  },
+                                                  {
+                                                    id: 3,
+                                                    name: "Jerome",
+                                                    color: "Purple"
+                                                  },
+                                                  {
+                                                    id: 8,
+                                                    name: "Padma",
+                                                    color: "Purple"
+                                                  }
+                                                ];
+                                                t.equal(array, expected, "Array should be sorted by name");
                                                 
                                               });
                                   }));
@@ -110,13 +111,17 @@ Zora$1.test("Collection", (function (t) {
               }));
         t.test("mutation functions", (function (t) {
                 t.test("delete function", (function (t) {
-                        var prim0 = TestSetup$Dexie.friendFixture(TestSetup$Dexie.setup(undefined));
-                        return prim0.then(function (friends) {
-                                    var prim0 = Table$Dexie.findeByCriteria(friends, {
+                        var dexie = TestSetup$Dexie.setup(undefined);
+                        var prim0 = TestSetup$Dexie.friendFixture(dexie);
+                        var prim0$1 = prim0.then(function (param) {
+                              return Curry._1(TestSetup$Dexie.Friend.table, dexie);
+                            });
+                        return prim0$1.then(function (friends) {
+                                    var prim0 = friends.where({
                                             color: "Purple"
                                           }).delete();
                                     var prim0$1 = prim0.then(function (param) {
-                                          return Table$Dexie.count(friends);
+                                          return friends.count();
                                         });
                                     return prim0$1.then(function (count) {
                                                 t.equal(count, 5, "Should be down to 5 friends");
@@ -125,22 +130,26 @@ Zora$1.test("Collection", (function (t) {
                                   });
                       }));
                 t.test("modify function", (function (t) {
-                        var prim0 = TestSetup$Dexie.friendFixture(TestSetup$Dexie.setup(undefined));
-                        return prim0.then(function (friends) {
-                                    var prim0 = Table$Dexie.findeByCriteria(friends, {
+                        var dexie = TestSetup$Dexie.setup(undefined);
+                        var prim0 = TestSetup$Dexie.friendFixture(dexie);
+                        var prim0$1 = prim0.then(function (param) {
+                              return Curry._1(TestSetup$Dexie.Friend.table, dexie);
+                            });
+                        return prim0$1.then(function (friends) {
+                                    var prim0 = friends.where({
                                             color: "Purple"
                                           }).modify({
                                           color: "Blue"
                                         });
                                     var prim0$1 = prim0.then(function (num_changed) {
                                           t.equal(num_changed, 3, "Should have changed all three items");
-                                          return Table$Dexie.findeByCriteria(friends, {
+                                          return friends.where({
                                                         color: "Blue"
                                                       }).count();
                                         });
                                     var prim0$2 = prim0$1.then(function (count) {
                                           t.equal(count, 5, "Should now have five frineds who chose blue");
-                                          return Table$Dexie.findeByCriteria(friends, {
+                                          return friends.where({
                                                         color: "Purple"
                                                       }).count();
                                         });
@@ -153,9 +162,13 @@ Zora$1.test("Collection", (function (t) {
                 return Zora.done(undefined);
               }));
         t.test("Collection operation functions (they return self)", (function (t) {
-                var prim0 = TestSetup$Dexie.friendFixture(TestSetup$Dexie.setup(undefined));
-                return prim0.then(function (friends) {
-                            var prim0 = Table$Dexie.bulkPut(friends, [
+                var dexie = TestSetup$Dexie.setup(undefined);
+                var prim0 = TestSetup$Dexie.friendFixture(dexie);
+                var prim0$1 = prim0.then(function (param) {
+                      return Curry._1(TestSetup$Dexie.Friend.table, dexie);
+                    });
+                return prim0$1.then(function (friends) {
+                            var prim0 = Curry._2(TestSetup$Dexie.Friend.bulkPut, friends, [
                                   {
                                     id: 9,
                                     name: "Padma",
@@ -168,7 +181,7 @@ Zora$1.test("Collection", (function (t) {
                                   }
                                 ]);
                             var prim0$1 = prim0.then(function (param) {
-                                  return Table$Dexie.findeByCriteria(friends, {
+                                  return friends.where({
                                               color: "Purple"
                                             });
                                 });
@@ -185,36 +198,38 @@ Zora$1.test("Collection", (function (t) {
                                         t.test("Offset function", (function (t) {
                                                 var prim0 = collection.clone().offset(2).toArray();
                                                 return prim0.then(function (array) {
-                                                            t.equal(array, [
-                                                                  {
-                                                                    id: 8,
-                                                                    name: "Padma",
-                                                                    color: "Purple"
-                                                                  },
-                                                                  {
-                                                                    id: 9,
-                                                                    name: "Padma",
-                                                                    color: "Purple"
-                                                                  }
-                                                                ], "Should not have first three entries");
+                                                            var expected = [
+                                                              {
+                                                                id: 8,
+                                                                name: "Padma",
+                                                                color: "Purple"
+                                                              },
+                                                              {
+                                                                id: 9,
+                                                                name: "Padma",
+                                                                color: "Purple"
+                                                              }
+                                                            ];
+                                                            t.equal(array, expected, "Should not have first three entries");
                                                             
                                                           });
                                               }));
                                         t.test("Limit function", (function (t) {
                                                 var prim0 = collection.clone().limit(2).toArray();
                                                 return prim0.then(function (array) {
-                                                            t.equal(array, [
-                                                                  {
-                                                                    id: 3,
-                                                                    name: "Jerome",
-                                                                    color: "Purple"
-                                                                  },
-                                                                  {
-                                                                    id: 4,
-                                                                    name: "Betty",
-                                                                    color: "Purple"
-                                                                  }
-                                                                ], "Should not have first three entries");
+                                                            var expected = [
+                                                              {
+                                                                id: 3,
+                                                                name: "Jerome",
+                                                                color: "Purple"
+                                                              },
+                                                              {
+                                                                id: 4,
+                                                                name: "Betty",
+                                                                color: "Purple"
+                                                              }
+                                                            ];
+                                                            t.equal(array, expected, "Should not have first three entries");
                                                             
                                                           });
                                               }));
@@ -223,18 +238,19 @@ Zora$1.test("Collection", (function (t) {
                                                         return f.name === "Padma";
                                                       }).toArray();
                                                 return prim0.then(function (array) {
-                                                            t.equal(array, [
-                                                                  {
-                                                                    id: 3,
-                                                                    name: "Jerome",
-                                                                    color: "Purple"
-                                                                  },
-                                                                  {
-                                                                    id: 4,
-                                                                    name: "Betty",
-                                                                    color: "Purple"
-                                                                  }
-                                                                ], "Should not have first three entries");
+                                                            var expected = [
+                                                              {
+                                                                id: 3,
+                                                                name: "Jerome",
+                                                                color: "Purple"
+                                                              },
+                                                              {
+                                                                id: 4,
+                                                                name: "Betty",
+                                                                color: "Purple"
+                                                              }
+                                                            ];
+                                                            t.equal(array, expected, "Should not have first three entries");
                                                             
                                                           });
                                               }));

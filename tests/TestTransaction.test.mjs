@@ -2,8 +2,8 @@
 
 import * as Zora from "@dusty-phillips/rescript-zora/src/Zora.mjs";
 import * as Zora$1 from "zora";
+import * as Curry from "rescript/lib/es6/curry.js";
 import * as $$Promise from "@ryyppy/rescript-promise/src/Promise.mjs";
-import * as Table$Dexie from "../src/Table.mjs";
 import * as Caml_exceptions from "rescript/lib/es6/caml_exceptions.js";
 import * as TestSetup$Dexie from "./TestSetup.mjs";
 
@@ -13,13 +13,13 @@ Zora$1.test("Transactions", (function (t) {
         t.test("Open transaction", (function (t) {
                 var dexie = TestSetup$Dexie.setup(undefined);
                 return dexie.transaction("rw", ["friends"], (function (tx) {
-                              var friends = tx.table("friends");
-                              TestSetup$Dexie.pt(TestSetup$Dexie.p(Table$Dexie.add(friends, {
+                              var friends = Curry._1(TestSetup$Dexie.Friend.table, dexie);
+                              TestSetup$Dexie.pt(TestSetup$Dexie.p(friends.add({
                                             id: undefined,
                                             name: "Chris",
                                             color: "Red"
                                           }), (function (id) {
-                                          return Table$Dexie.getById(friends, id);
+                                          return friends.get(id);
                                         })), (function (result) {
                                       return Zora.optionSome(t, result, (function (t, friend) {
                                                     t.equal(friend.name, "Chris", "Friend should be added in transaction");

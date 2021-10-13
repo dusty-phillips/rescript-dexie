@@ -5,20 +5,22 @@ zora("Where clauses", t => {
   let dexie = setup()
   dexie
   ->friendFixture
-  ->p(friends => {
+  ->p(_ => {
+    let friends = dexie->Friend.table
+
     friends
-    ->Table.where("name")
+    ->Friend.where("name")
     ->Where.equals("Chris")
     ->Collection.toArray
     ->p(chris => {
       t->equal(chris, [{id: Some(1), name: "Chris", color: #Red}], "should be Chris")
 
-      friends->Table.where("name")->Where.equalsIgnoreCase("chris")->Collection.toArray
+      friends->Friend.where("name")->Where.equalsIgnoreCase("chris")->Collection.toArray
     })
     ->p(chris => {
       t->equal(chris, [{id: Some(1), name: "Chris", color: #Red}], "should be Chris")
 
-      friends->Table.where("id")->Where.above(Some(5))->Collection.toArray
+      friends->Friend.where("id")->Where.above(Some(5))->Collection.toArray
     })
     ->p(items => {
       t->equal(
@@ -31,7 +33,7 @@ zora("Where clauses", t => {
         "Should have the last three items",
       )
 
-      friends->Table.where("id")->Where.aboveOrEqual(Some(6))->Collection.toArray
+      friends->Friend.where("id")->Where.aboveOrEqual(Some(6))->Collection.toArray
     })
     ->p(items => {
       t->equal(
@@ -43,7 +45,7 @@ zora("Where clauses", t => {
         ],
         "Should have the last three items",
       )
-      friends->Table.where("id")->Where.below(Some(3))->Collection.toArray
+      friends->Friend.where("id")->Where.below(Some(3))->Collection.toArray
     })
     ->p(items => {
       t->equal(
@@ -51,7 +53,7 @@ zora("Where clauses", t => {
         [{id: Some(1), name: "Chris", color: #Red}, {id: Some(2), name: "Leroy", color: #Blue}],
         "Should have the first two items",
       )
-      friends->Table.where("id")->Where.belowOrEqual(Some(2))->Collection.toArray
+      friends->Friend.where("id")->Where.belowOrEqual(Some(2))->Collection.toArray
     })
     ->p(items => {
       t->equal(
@@ -60,7 +62,7 @@ zora("Where clauses", t => {
         "Should have the first two items",
       )
 
-      friends->Table.where("name")->Where.anyOf(["Leroy", "Rohan"])->Collection.toArray
+      friends->Friend.where("name")->Where.anyOf(["Leroy", "Rohan"])->Collection.toArray
     })
     ->p(items => {
       t->equal(
@@ -68,7 +70,7 @@ zora("Where clauses", t => {
         [{id: Some(2), name: "Leroy", color: #Blue}, {id: Some(6), name: "Rohan", color: #Red}],
         "Should have the two selected items",
       )
-      friends->Table.where("name")->Where.anyOfIgnoreCase(["leRoy", "roHan"])->Collection.toArray
+      friends->Friend.where("name")->Where.anyOfIgnoreCase(["leRoy", "roHan"])->Collection.toArray
     })
     ->p(items => {
       t->equal(
@@ -76,22 +78,22 @@ zora("Where clauses", t => {
         [{id: Some(2), name: "Leroy", color: #Blue}, {id: Some(6), name: "Rohan", color: #Red}],
         "Should have the two selected items",
       )
-      friends->Table.where("name")->Where.notEqual("Rohan")->Collection.toArray
+      friends->Friend.where("name")->Where.notEqual("Rohan")->Collection.toArray
     })
     ->p(items => {
       t->equal(items->Array.length, 7, "should only contain 7 items")
 
-      friends->Table.where("name")->Where.noneOf(["Rohan", "Chris", "Natalia"])->Collection.toArray
+      friends->Friend.where("name")->Where.noneOf(["Rohan", "Chris", "Natalia"])->Collection.toArray
     })
     ->p(items => {
       t->equal(items->Array.length, 5, "should only contain 5 items")
 
-      friends->Table.where("name")->Where.startsWith("Le")->Collection.toArray
+      friends->Friend.where("name")->Where.startsWith("Le")->Collection.toArray
     })
     ->p(items => {
       t->equal(items, [{id: Some(2), name: "Leroy", color: #Blue}], "Should start with Le")
 
-      friends->Table.where("name")->Where.startsWithAnyOf(["Le", "Na"])->Collection.toArray
+      friends->Friend.where("name")->Where.startsWithAnyOf(["Le", "Na"])->Collection.toArray
     })
     ->p(items => {
       t->equal(
@@ -100,13 +102,13 @@ zora("Where clauses", t => {
         "Should start with Le and Na",
       )
 
-      friends->Table.where("name")->Where.startsWithIgnoreCase("le")->Collection.toArray
+      friends->Friend.where("name")->Where.startsWithIgnoreCase("le")->Collection.toArray
     })
     ->p(items => {
       t->equal(items, [{id: Some(2), name: "Leroy", color: #Blue}], "Should start with Le")
 
       friends
-      ->Table.where("name")
+      ->Friend.where("name")
       ->Where.startsWithAnyOfIgnoreCase(["le", "na"])
       ->Collection.toArray
     })
@@ -117,7 +119,7 @@ zora("Where clauses", t => {
         "Should start with le and na",
       )
 
-      friends->Table.where("name")->Where.inAnyRange([["Le", "Op"]])->Collection.toArray
+      friends->Friend.where("name")->Where.inAnyRange([["Le", "Op"]])->Collection.toArray
     })
     ->p(items => {
       t->equal(
@@ -127,7 +129,7 @@ zora("Where clauses", t => {
       )
 
       friends
-      ->Table.where("id")
+      ->Friend.where("id")
       ->Where.inAnyRange(
         [[Some(1), Some(4)], [Some(6), Some(7)]],
         ~options={includeLowers: false, includeUppers: true},

@@ -2,29 +2,28 @@
 
 import * as Zora from "@dusty-phillips/rescript-zora/src/Zora.mjs";
 import * as Zora$1 from "zora";
+import * as Curry from "rescript/lib/es6/curry.js";
 import * as Caml_array from "rescript/lib/es6/caml_array.js";
-import * as Table$Dexie from "../src/Table.mjs";
 import * as TestSetup$Dexie from "./TestSetup.mjs";
 
 Zora$1.test("Table commands", (function (t) {
         t.test("Test basic methods", (function (t) {
                 var dexie = TestSetup$Dexie.setup(undefined);
-                var friends = dexie.table("friends");
-                t.equal(friends.name, "friends", "Table name should be `friends`");
-                return TestSetup$Dexie.pt(TestSetup$Dexie.p(TestSetup$Dexie.p(TestSetup$Dexie.pt(TestSetup$Dexie.p(TestSetup$Dexie.p(TestSetup$Dexie.p(TestSetup$Dexie.p(TestSetup$Dexie.p(TestSetup$Dexie.p(TestSetup$Dexie.p(TestSetup$Dexie.p(TestSetup$Dexie.p(TestSetup$Dexie.p(TestSetup$Dexie.p(TestSetup$Dexie.p(TestSetup$Dexie.p(Table$Dexie.add(friends, {
+                var friends = Curry._1(TestSetup$Dexie.Friend.table, dexie);
+                return TestSetup$Dexie.pt(TestSetup$Dexie.p(TestSetup$Dexie.p(TestSetup$Dexie.pt(TestSetup$Dexie.p(TestSetup$Dexie.p(TestSetup$Dexie.p(TestSetup$Dexie.p(TestSetup$Dexie.p(TestSetup$Dexie.p(TestSetup$Dexie.p(TestSetup$Dexie.p(TestSetup$Dexie.p(TestSetup$Dexie.p(TestSetup$Dexie.p(TestSetup$Dexie.p(TestSetup$Dexie.p(friends.add({
                                                                                                 id: undefined,
                                                                                                 name: "Chris",
                                                                                                 color: "Purple"
                                                                                               }), (function (id) {
                                                                                               t.equal(id, 1, "Id should be 1");
-                                                                                              return Table$Dexie.getById(friends, 1);
+                                                                                              return friends.get(1);
                                                                                             })), (function (result) {
                                                                                           Zora.optionSome(t, result, (function (t, friend) {
                                                                                                   t.equal(friend.name, "Chris", "Returned friend should have same name");
                                                                                                   t.equal(friend.color, "Purple", "Returned friend should have same color");
                                                                                                   
                                                                                                 }));
-                                                                                          return Table$Dexie.getByCriteria(friends, {
+                                                                                          return friends.get({
                                                                                                       name: "Chris"
                                                                                                     });
                                                                                         })), (function (result) {
@@ -33,78 +32,78 @@ Zora$1.test("Table commands", (function (t) {
                                                                                               t.equal(friend.color, "Purple", "Returned friend should have same color");
                                                                                               
                                                                                             }));
-                                                                                      return Table$Dexie.getById(friends, 5);
+                                                                                      return friends.get(5);
                                                                                     })), (function (result) {
                                                                                   Zora.optionNone(t, result, "result should be none");
-                                                                                  return Table$Dexie.getByCriteria(friends, {
+                                                                                  return friends.get({
                                                                                               name: "nobody"
                                                                                             });
                                                                                 })), (function (result) {
                                                                               Zora.optionNone(t, result, "result should be none");
-                                                                              Table$Dexie.add(friends, {
+                                                                              friends.add({
                                                                                     id: undefined,
                                                                                     name: "Sam",
                                                                                     color: "Blue"
                                                                                   });
-                                                                              return Table$Dexie.put(friends, {
+                                                                              return friends.put({
                                                                                           id: 3,
                                                                                           name: "Jess",
                                                                                           color: "Red"
                                                                                         });
                                                                             })), (function (id) {
                                                                           t.equal(id, 3, "Should have added a third friend");
-                                                                          return Table$Dexie.getById(friends, 3);
+                                                                          return friends.get(3);
                                                                         })), (function (result) {
                                                                       Zora.optionSome(t, result, (function (t, friend) {
                                                                               t.equal(friend.name, "Jess", "Name should be what was set");
                                                                               t.equal(friend.color, "Red", "Color should be what was set");
                                                                               
                                                                             }));
-                                                                      return Table$Dexie.put(friends, {
+                                                                      return friends.put({
                                                                                   id: 3,
                                                                                   name: "Jess",
                                                                                   color: "Blue"
                                                                                 });
                                                                     })), (function (id) {
                                                                   t.equal(id, 3, "Should have updated the third friend");
-                                                                  return Table$Dexie.getById(friends, 3);
+                                                                  return friends.get(3);
                                                                 })), (function (result) {
                                                               Zora.optionSome(t, result, (function (t, friend) {
                                                                       t.equal(friend.name, "Jess", "Name should not have changed");
                                                                       t.equal(friend.color, "Blue", "Color should have changed");
                                                                       
                                                                     }));
-                                                              return Table$Dexie.$$delete(friends, 1);
+                                                              return friends.delete(1);
                                                             })), (function (param) {
-                                                          return Table$Dexie.count(friends);
+                                                          return friends.count();
                                                         })), (function (count) {
                                                       t.equal(count, 2, "Should now have two entries");
-                                                      return Table$Dexie.put(friends, {
+                                                      return friends.put({
                                                                   id: undefined,
                                                                   name: "Nora",
                                                                   color: "Red"
                                                                 });
                                                     })), (function (id) {
                                                   t.equal(id, 4, "Should successfully add and increment id with put");
-                                                  return Table$Dexie.update(friends, 4, {
+                                                  return friends.update(4, {
                                                               color: "Purple"
                                                             });
                                                 })), (function (updated) {
                                               t.equal(updated, 1, "Should have updated one row");
-                                              return Table$Dexie.getById(friends, 4);
+                                              return friends.get(4);
                                             })), (function (result) {
                                           Zora.optionSome(t, result, (function (t, friend) {
                                                   t.equal(friend.color, "Purple", "Color should have changed");
                                                   
                                                 }));
-                                          return Table$Dexie.findeByCriteria(friends, {
+                                          return friends.where({
                                                       color: "Purple"
                                                     });
                                         })), (function (prim) {
                                       return prim.toArray();
                                     })), (function (result) {
                                   t.equal(result.length, 1, "Should be one #Purple person in array");
-                                  return Table$Dexie.where(friends, "name").equals("Jess").toArray();
+                                  return friends.where("name").equals("Jess").toArray();
                                 })), (function (array) {
                               t.equal(array, [{
                                       id: 3,
@@ -116,8 +115,8 @@ Zora$1.test("Table commands", (function (t) {
               }));
         t.test("Test bulk methods", (function (t) {
                 var dexie = TestSetup$Dexie.setup(undefined);
-                var friends = dexie.table("friends");
-                return TestSetup$Dexie.pt(TestSetup$Dexie.p(TestSetup$Dexie.p(TestSetup$Dexie.p(TestSetup$Dexie.p(TestSetup$Dexie.p(TestSetup$Dexie.p(Table$Dexie.bulkAdd(friends, [
+                var friends = Curry._1(TestSetup$Dexie.Friend.table, dexie);
+                return TestSetup$Dexie.pt(TestSetup$Dexie.p(TestSetup$Dexie.p(TestSetup$Dexie.p(TestSetup$Dexie.p(TestSetup$Dexie.p(TestSetup$Dexie.p(Curry._2(TestSetup$Dexie.Friend.bulkAdd, Curry._1(TestSetup$Dexie.Friend.table, dexie), [
                                                         {
                                                           id: undefined,
                                                           name: "Chris",
@@ -135,10 +134,10 @@ Zora$1.test("Table commands", (function (t) {
                                                         }
                                                       ]), (function (ids) {
                                                       t.equal(ids.length, 3, "Should have added two ids");
-                                                      return Table$Dexie.count(friends);
+                                                      return friends.count();
                                                     })), (function (count) {
                                                   t.equal(count, 3, "Should now have three entries");
-                                                  return Table$Dexie.bulkGet(friends, [
+                                                  return friends.bulkGet([
                                                               1,
                                                               2,
                                                               999
@@ -150,16 +149,16 @@ Zora$1.test("Table commands", (function (t) {
                                                       
                                                     }));
                                               Zora.optionNone(t, Caml_array.get(result, 2), "Third result should be undefined");
-                                              return Table$Dexie.bulkDelete(friends, [
+                                              return friends.bulkDelete([
                                                           2,
                                                           3,
                                                           99
                                                         ]);
                                             })), (function (param) {
-                                          return Table$Dexie.count(friends);
+                                          return friends.count();
                                         })), (function (count) {
                                       t.equal(count, 1, "Should have deleted two of three entries");
-                                      return Table$Dexie.bulkPut(friends, [
+                                      return Curry._2(TestSetup$Dexie.Friend.bulkPut, friends, [
                                                   {
                                                     id: 1,
                                                     name: "Jerome",
@@ -177,7 +176,7 @@ Zora$1.test("Table commands", (function (t) {
                                                   }
                                                 ]);
                                     })), (function (param) {
-                                  return Table$Dexie.count(friends);
+                                  return friends.count();
                                 })), (function (count) {
                               t.equal(count, 3, "Should have replaced one and added two entries");
                               

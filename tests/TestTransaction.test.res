@@ -8,11 +8,11 @@ zoraBlock("Transactions", t => {
     let dexie = setup()
 
     dexie->Database.transaction(#rw, ["friends"], tx => {
-      let friends = tx->Transaction.table("friends")
+      let friends = dexie->Friend.table
 
       friends
-      ->Table.add({id: None, name: "Chris", color: #Red})
-      ->p(id => friends->Table.getById(id))
+      ->Friend.add({id: None, name: "Chris", color: #Red})
+      ->p(id => friends->Friend.getById(id))
       ->pt(result => {
         t->optionSome(result, (t, friend) => {
           t->equal(friend.name, "Chris", "Friend should be added in transaction")

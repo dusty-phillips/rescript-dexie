@@ -1,51 +1,62 @@
-type t<'item, 'id> = {name: string}
+module MakeTable = (Schema: Schema.SchemaItem) => {
+  type t = Schema.t
+  type id = Schema.id
+  type table = {name: string}
 
-type bulkOptions = {allKeys: bool}
+  type bulkOptions = {allKeys: bool}
 
-@send
-external bulkAdd_binding: (t<'item, 'id>, array<'item>, bulkOptions) => Promise.t<'idorarray> =
-  "bulkAdd"
+  %%private(
+    @send
+    external bulkAdd_binding: (table, array<t>, bulkOptions) => Promise.t<'idorarray> =
+      "bulkAdd"
+  )
 
-@send
-external bulkPut_binding: (t<'item, 'id>, array<'item>, bulkOptions) => Promise.t<'idorarray> =
-  "bulkPut"
+  %%private(
+    @send
+    external bulkPut_binding: (table, array<t>, bulkOptions) => Promise.t<'idorarray> =
+      "bulkPut"
+  )
 
-@send
-external add: (t<'item, 'id>, 'item) => Promise.t<'id> = "add"
+  @send
+  external add: (table, t) => Promise.t<id> = "add"
 
-@send
-external bulkDelete: (t<'item, 'id>, array<'id>) => Promise.t<unit> = "bulkDelete"
+  @send
+  external bulkDelete: (table, array<id>) => Promise.t<unit> = "bulkDelete"
 
-@send
-external bulkGet: (t<'item, 'id>, array<'id>) => Promise.t<array<option<'item>>> = "bulkGet"
+  @send
+  external bulkGet: (table, array<id>) => Promise.t<array<option<t>>> = "bulkGet"
 
-@send
-external count: t<'item, 'id> => Promise.t<int> = "count"
+  @send
+  external count: table => Promise.t<int> = "count"
 
-@send external delete: (t<'item, 'id>, 'id) => Promise.t<unit> = "delete"
+  @send external delete: (table, id) => Promise.t<unit> = "delete"
 
-@send
-external findeByCriteria: (t<'item, 'id>, Js.t<'a>) => Collection.t<'item> = "where"
+  @send
+  external findeByCriteria: (table, Js.t<'a>) => Collection.t<t> = "where"
 
-@send
-external getById: (t<'item, 'id>, 'id) => Promise.t<option<'item>> = "get"
+  @send
+  external getById: (table, id) => Promise.t<option<t>> = "get"
 
-@send
-external getByCriteria: (t<'item, 'id>, Js.t<'a>) => Promise.t<option<'item>> = "get"
+  @send
+  external getByCriteria: (table, Js.t<'a>) => Promise.t<option<t>> = "get"
 
-@send
-external put: (t<'item, 'id>, 'item) => Promise.t<'id> = "put"
+  @send
+  external put: (table, t) => Promise.t<id> = "put"
 
-@send
-external update: (t<'item, 'id>, 'id, Js.t<'a>) => Promise.t<int> = "update"
+  @send
+  external update: (table, id, Js.t<'a>) => Promise.t<int> = "update"
 
-@send
-external where: (t<'item, 'id>, string) => Where.t<'item> = "where"
+  @send
+  external where: (table, string) => Where.t<t> = "where"
 
-let bulkAdd = (table: t<'item, 'id>, items: array<'item>): Promise.t<array<'id>> => {
-  table->bulkAdd_binding(items, {allKeys: true})
-}
+  let bulkAdd = (table: table, items: array<t>): Promise.t<array<id>> => {
+    table->bulkAdd_binding(items, {allKeys: true})
+  }
 
-let bulkPut = (table: t<'item, 'id>, items: array<'item>): Promise.t<array<'id>> => {
-  table->bulkPut_binding(items, {allKeys: true})
+  let bulkPut = (table: table, items: array<t>): Promise.t<array<id>> => {
+    table->bulkPut_binding(items, {allKeys: true})
+  }
+
+  %%private(@send external table_binding: (Database.t, string) => table = "table")
+  let table: Database.t => table = database => database->table_binding(Schema.tableName)
 }

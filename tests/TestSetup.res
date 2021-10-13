@@ -10,11 +10,17 @@ Dexie.dependencies.IDBKeyRange = IDBKeyRange;
 let p = Promise.then
 let pt = Promise.thenResolve
 
-type friend = {
-  id: option<int>,
-  name: string,
-  color: [#Blue | #Red | #Purple],
+module FriendSchema = {
+  type t = {
+    id: option<int>,
+    name: string,
+    color: [#Blue | #Red | #Purple],
+  }
+  type id = int
+  let tableName = "friends"
 }
+
+module Friend = Table.MakeTable(FriendSchema)
 
 let setup = () => {
   let someNumber = random()->Js.Float.toString
@@ -35,9 +41,9 @@ let setup = () => {
 }
 
 let friendFixture = dexie => {
-  let friends: Table.t<friend, int> = dexie->Database.table("friends")
-  friends
-  ->Table.bulkPut([
+  dexie
+  ->Friend.table
+  ->Friend.bulkPut([
     {id: Some(1), name: "Chris", color: #Red},
     {id: Some(2), name: "Leroy", color: #Blue},
     {id: Some(3), name: "Jerome", color: #Purple},
@@ -47,5 +53,4 @@ let friendFixture = dexie => {
     {id: Some(7), name: "Natalia", color: #Red},
     {id: Some(8), name: "Padma", color: #Purple},
   ])
-  ->pt(_ => friends)
 }

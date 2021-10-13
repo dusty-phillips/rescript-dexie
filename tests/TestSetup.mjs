@@ -21,9 +21,14 @@ function pt(prim0, prim1) {
   return prim0.then(Curry.__1(prim1));
 }
 
+var FriendSchema = {
+  tableName: "friends"
+};
+
+var Friend = Table$Dexie.MakeTable(FriendSchema);
+
 function setup(param) {
   var someNumber = Math.random().toString();
-  console.log(someNumber);
   var dexie = new Dexie("hello dexie " + someNumber);
   var schema = [
     [
@@ -43,57 +48,55 @@ function setup(param) {
 }
 
 function friendFixture(dexie) {
-  var friends = dexie.table("friends");
-  var prim0 = Table$Dexie.bulkPut(friends, [
-        {
-          id: 1,
-          name: "Chris",
-          color: "Red"
-        },
-        {
-          id: 2,
-          name: "Leroy",
-          color: "Blue"
-        },
-        {
-          id: 3,
-          name: "Jerome",
-          color: "Purple"
-        },
-        {
-          id: 4,
-          name: "Betty",
-          color: "Purple"
-        },
-        {
-          id: 5,
-          name: "Xiao",
-          color: "Blue"
-        },
-        {
-          id: 6,
-          name: "Rohan",
-          color: "Red"
-        },
-        {
-          id: 7,
-          name: "Natalia",
-          color: "Red"
-        },
-        {
-          id: 8,
-          name: "Padma",
-          color: "Purple"
-        }
-      ]);
-  return prim0.then(function (param) {
-              return friends;
-            });
+  return Curry._2(Friend.bulkPut, Curry._1(Friend.table, dexie), [
+              {
+                id: 1,
+                name: "Chris",
+                color: "Red"
+              },
+              {
+                id: 2,
+                name: "Leroy",
+                color: "Blue"
+              },
+              {
+                id: 3,
+                name: "Jerome",
+                color: "Purple"
+              },
+              {
+                id: 4,
+                name: "Betty",
+                color: "Purple"
+              },
+              {
+                id: 5,
+                name: "Xiao",
+                color: "Blue"
+              },
+              {
+                id: 6,
+                name: "Rohan",
+                color: "Red"
+              },
+              {
+                id: 7,
+                name: "Natalia",
+                color: "Red"
+              },
+              {
+                id: 8,
+                name: "Padma",
+                color: "Purple"
+              }
+            ]);
 }
 
 export {
   p ,
   pt ,
+  FriendSchema ,
+  Friend ,
   setup ,
   friendFixture ,
   

@@ -3,6 +3,7 @@
   "version": "0.2.0",
   "scripts": {
     "build": "rescript build",
+    "build:deps": "rescript build -with-deps",
     "build:watch": "rescript build -w",
     "clean": "rescript clean",
     "format": "rescript format",
