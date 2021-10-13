@@ -40,9 +40,9 @@ function setup(param) {
       "++id,name,kind"
     ]
   ];
-  Version$Dexie.upgrade(Version$Dexie.stores(dexie.version(1), schema), (function (_tx) {
-          
-        }));
+  Version$Dexie.stores(dexie.version(1), schema).upgrade(function (_tx) {
+        
+      });
   dexie.open();
   return dexie;
 }

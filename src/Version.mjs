@@ -7,12 +7,7 @@ function stores(version, schema) {
   return version.stores(schema$1);
 }
 
-function upgrade(prim0, prim1) {
-  return prim0.upgrade(prim1);
-}
-
 export {
-  upgrade ,
   stores ,
   
 }
