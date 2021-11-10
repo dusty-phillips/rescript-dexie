@@ -16,7 +16,9 @@
     { "dir": "tests", "subdirs": true, "type": "dev" }
   ],
   "bs-dependencies": [
-    "@dusty-phillips/rescript-zora",
     "@ryyppy/rescript-promise"
+  ],
+  "bs-dev-dependencies": [
+    "@dusty-phillips/rescript-zora"
   ]
 }
