@@ -211,7 +211,6 @@ Zora$1.test("Where clauses", (function (t) {
                                                       ]
                                                     ]).toArray();
                                       })), (function (items) {
-                                    console.log(items);
                                     t.equal(items, [
                                           {
                                             id: 2,

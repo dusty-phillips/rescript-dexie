@@ -180,6 +180,36 @@ Zora$1.test("Table commands", (function (t) {
                               
                             }));
               }));
+        t.test("Test toArray method", (function (t) {
+                var dexie = TestSetup$Dexie.setup(undefined);
+                var friends = [
+                  {
+                    id: 1,
+                    name: "Chris",
+                    color: "Purple"
+                  },
+                  {
+                    id: 2,
+                    name: "Samuel",
+                    color: "Blue"
+                  },
+                  {
+                    id: 3,
+                    name: "Samantha",
+                    color: "Red"
+                  }
+                ];
+                return TestSetup$Dexie.p(TestSetup$Dexie.p(Curry._2(TestSetup$Dexie.Friend.bulkAdd, dexie, friends), (function (param) {
+                                  return Curry._1(TestSetup$Dexie.Friend.toArray, dexie);
+                                })), (function (result) {
+                              t.equal(result, friends, "Should list all friends");
+                              return Curry._2(TestSetup$Dexie.Friend.bulkDelete, dexie, [
+                                          1,
+                                          2,
+                                          3
+                                        ]);
+                            }));
+              }));
         return Zora.done(undefined);
       }));
 
