@@ -147,5 +147,28 @@ zora("Table commands", t => {
     })
   })
 
+  t->test("Test toArray method", t => {
+    let dexie = setup()
+
+    open TestSetup.FriendSchema
+
+    let friends = [
+      {id: Some(1), name: "Chris", color: #Purple},
+      {id: Some(2), name: "Samuel", color: #Blue},
+      {id: Some(3), name: "Samantha", color: #Red},
+    ]
+
+    dexie
+    ->Friend.bulkAdd(friends)
+    ->p(_ => {
+      dexie->Friend.toArray
+    })
+    ->p(result => {
+      t->equal(result, friends, "Should list all friends")
+
+      dexie->Friend.bulkDelete([1, 2, 3])
+    })
+  })
+
   done()
 })

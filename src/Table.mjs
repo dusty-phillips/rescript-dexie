@@ -45,6 +45,9 @@ function MakeTable(Schema) {
   var where = function (dexie, fieldName) {
     return dexie.table(Schema.tableName).where(fieldName);
   };
+  var toArray = function (dexie) {
+    return dexie.table(Schema.tableName).toArray();
+  };
   return {
           add: add,
           bulkAdd: bulkAdd,
@@ -58,7 +61,8 @@ function MakeTable(Schema) {
           getByCriteria: getByCriteria,
           put: put,
           update: update,
-          where: where
+          where: where,
+          toArray: toArray
         };
 }
 

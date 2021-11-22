@@ -23,6 +23,7 @@ module type MakeTableType = (Schema: SchemaItem) =>
   let put: (Database.t, t) => Promise.t<id>
   let update: (Database.t, id, Js.t<'a>) => Promise.t<int>
   let where: (Database.t, string) => Where.t<t>
+  let toArray: Database.t => Promise.t<array<t>>
 }
 
 module MakeTable: MakeTableType = (Schema: SchemaItem) => {
@@ -60,6 +61,8 @@ module MakeTable: MakeTableType = (Schema: SchemaItem) => {
     external update: (table, id, Js.t<'a>) => Promise.t<int> = "update"
     @send
     external where: (table, string) => Where.t<t> = "where"
+    @send
+    external toArray: table => Promise.t<array<t>> = "toArray"
   }
 
   let add = (dexie: Database.t, item: t): Promise.t<id> => {
@@ -102,5 +105,8 @@ module MakeTable: MakeTableType = (Schema: SchemaItem) => {
   }
   let where = (dexie: Database.t, fieldName: string): Where.t<t> => {
     dexie->Bindings.table(Schema.tableName)->Bindings.where(fieldName)
+  }
+  let toArray = (dexie: Database.t): Promise.t<array<t>> => {
+    dexie->Bindings.table(Schema.tableName)->Bindings.toArray
   }
 }

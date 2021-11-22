@@ -132,7 +132,6 @@ zora("Where clauses", t => {
       ->Collection.toArray
     })
     ->p(items => {
-      Js.log(items)
       t->equal(
         items,
         [
