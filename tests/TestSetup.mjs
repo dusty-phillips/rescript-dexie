@@ -13,14 +13,6 @@ Dexie.dependencies.indexedDB = indexedDB;
 Dexie.dependencies.IDBKeyRange = IDBKeyRange;
 ;
 
-function p(prim0, prim1) {
-  return prim0.then(Curry.__1(prim1));
-}
-
-function pt(prim0, prim1) {
-  return prim0.then(Curry.__1(prim1));
-}
-
 var FriendSchema = {
   tableName: "friends"
 };
@@ -29,7 +21,7 @@ var Friend = Table$Dexie.MakeTable(FriendSchema);
 
 function setup(param) {
   var someNumber = Math.random().toString();
-  var dexie = new Dexie("hello dexie " + someNumber);
+  var dexie = new Dexie("hello dexie " + someNumber + "");
   var schema = [
     [
       "friends",
@@ -47,8 +39,8 @@ function setup(param) {
   return dexie;
 }
 
-function friendFixture(dexie) {
-  return Curry._2(Friend.bulkPut, dexie, [
+async function friendFixture(dexie) {
+  return await Curry._2(Friend.bulkPut, dexie, [
               {
                 id: 1,
                 name: "Chris",
@@ -93,12 +85,9 @@ function friendFixture(dexie) {
 }
 
 export {
-  p ,
-  pt ,
   FriendSchema ,
   Friend ,
   setup ,
   friendFixture ,
-  
 }
 /*  Not a pure module */

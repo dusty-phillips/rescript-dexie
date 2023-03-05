@@ -7,8 +7,6 @@ Dexie.dependencies.indexedDB = indexedDB;
 Dexie.dependencies.IDBKeyRange = IDBKeyRange;
 `)
 @scope("Math") @val external random: unit => float = "random"
-let p = Promise.then
-let pt = Promise.thenResolve
 
 module FriendSchema = {
   type t = {
@@ -40,8 +38,8 @@ let setup = () => {
   dexie
 }
 
-let friendFixture = dexie => {
-  dexie->Friend.bulkPut([
+let friendFixture = async dexie => {
+  await dexie->Friend.bulkPut([
     {id: Some(1), name: "Chris", color: #Red},
     {id: Some(2), name: "Leroy", color: #Blue},
     {id: Some(3), name: "Jerome", color: #Purple},

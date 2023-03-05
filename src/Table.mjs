@@ -68,6 +68,5 @@ function MakeTable(Schema) {
 
 export {
   MakeTable ,
-  
 }
 /* No side effect */

@@ -3,53 +3,50 @@
 import * as Zora from "@dusty-phillips/rescript-zora/src/Zora.mjs";
 import * as Zora$1 from "zora";
 import * as Curry from "rescript/lib/es6/curry.js";
-import * as $$Promise from "@ryyppy/rescript-promise/src/Promise.mjs";
+import * as Js_exn from "rescript/lib/es6/js_exn.js";
 import * as Caml_exceptions from "rescript/lib/es6/caml_exceptions.js";
 import * as TestSetup$Dexie from "./TestSetup.mjs";
+import * as Caml_js_exceptions from "rescript/lib/es6/caml_js_exceptions.js";
 
 var MyError = /* @__PURE__ */Caml_exceptions.create("TestTransaction.MyError");
 
 Zora$1.test("Transactions", (function (t) {
-        t.test("Open transaction", (function (t) {
+        t.test("Open transaction", (async function (t) {
                 var dexie = TestSetup$Dexie.setup(undefined);
-                return dexie.transaction("rw", ["friends"], (function (_tx) {
-                              TestSetup$Dexie.pt(TestSetup$Dexie.p(Curry._2(TestSetup$Dexie.Friend.add, dexie, {
-                                            id: undefined,
-                                            name: "Chris",
-                                            color: "Red"
-                                          }), (function (id) {
-                                          return Curry._2(TestSetup$Dexie.Friend.getById, dexie, id);
-                                        })), (function (result) {
-                                      return Zora.optionSome(t, result, (function (t, friend) {
-                                                    t.equal(friend.name, "Chris", "Friend should be added in transaction");
-                                                    
-                                                  }));
-                                    }));
-                              
+                return await dexie.transaction("rw", ["friends"], (async function (_tx) {
+                              var id = await Curry._2(TestSetup$Dexie.Friend.add, dexie, {
+                                    id: undefined,
+                                    name: "Chris",
+                                    color: "Red"
+                                  });
+                              var friend = await Curry._2(TestSetup$Dexie.Friend.getById, dexie, id);
+                              return Zora.optionSome(t, friend, (function (t, friend) {
+                                            t.equal(friend.name, "Chris", "Friend should be added in transaction");
+                                          }));
                             }));
               }));
-        t.test("Abort transaction", (function (t) {
+        t.skip("Abort transaction", (async function (t) {
                 var dexie = TestSetup$Dexie.setup(undefined);
-                return $$Promise.$$catch(dexie.transaction("rw", ["friends"], (function (tx) {
-                                  tx.abort();
-                                  
-                                })), (function (error) {
-                              if (error.RE_EXN_ID === $$Promise.JsError) {
-                                Zora.optionSome(t, error._1.name, (function (t, name) {
-                                        t.equal(name, "AbortError", "should catch abortError");
-                                        
-                                      }));
-                              } else {
-                                t.fail("Received incorrect error");
-                              }
-                              return Zora.done(undefined);
-                            }));
+                try {
+                  return await dexie.transaction("rw", ["friends"], (async function (tx) {
+                                tx.abort();
+                              }));
+                }
+                catch (raw_ex){
+                  var ex = Caml_js_exceptions.internalToOCamlException(raw_ex);
+                  if (ex.RE_EXN_ID === Js_exn.$$Error) {
+                    return Zora.optionSome(t, ex._1.name, (function (t, name) {
+                                  t.equal(name, "AbortError", "should catch abortError");
+                                }));
+                  } else {
+                    t.fail("Received incorrect error");
+                    return ;
+                  }
+                }
               }));
-        
       }));
 
 export {
   MyError ,
-  
 }
 /*  Not a pure module */

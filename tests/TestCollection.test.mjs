@@ -5,256 +5,188 @@ import * as Zora$1 from "zora";
 import * as Curry from "rescript/lib/es6/curry.js";
 import * as TestSetup$Dexie from "./TestSetup.mjs";
 
-function p(prim0, prim1) {
-  return prim0.then(Curry.__1(prim1));
-}
-
-function pt(prim0, prim1) {
-  return prim0.then(Curry.__1(prim1));
-}
-
-Zora$1.test("Collection", (function (t) {
-        t.test("retreival functions", (function (t) {
+Zora$1.test("Collection", (async function (t) {
+        t.test("retreival functions", (async function (t) {
                 var dexie = TestSetup$Dexie.setup(undefined);
-                var prim0 = TestSetup$Dexie.friendFixture(dexie);
-                var prim0$1 = prim0.then(function (param) {
-                      return Curry._2(TestSetup$Dexie.Friend.findByCriteria, dexie, {
-                                  color: "Purple"
-                                });
+                await TestSetup$Dexie.friendFixture(dexie);
+                var collection = Curry._2(TestSetup$Dexie.Friend.findByCriteria, dexie, {
+                      color: "Purple"
                     });
-                return prim0$1.then(function (collection) {
-                            t.test("count function", (function (t) {
-                                    var prim0 = collection.clone().count();
-                                    return prim0.then(function (count) {
-                                                t.equal(count, 3, "3 Purple Elements");
-                                                
-                                              });
-                                  }));
-                            t.test("first function", (function (t) {
-                                    var prim0 = collection.clone().first();
-                                    return prim0.then(function (first) {
-                                                return Zora.optionSome(t, first, (function (t, friend) {
-                                                              t.equal(friend, {
-                                                                    id: 3,
-                                                                    name: "Jerome",
-                                                                    color: "Purple"
-                                                                  }, "First friend should be Betty");
-                                                              
-                                                            }));
-                                              });
-                                  }));
-                            t.test("toArray", (function (t) {
-                                    var prim0 = collection.clone().toArray();
-                                    return prim0.then(function (array) {
-                                                var expected = [
-                                                  {
-                                                    id: 3,
-                                                    name: "Jerome",
-                                                    color: "Purple"
-                                                  },
-                                                  {
-                                                    id: 4,
-                                                    name: "Betty",
-                                                    color: "Purple"
-                                                  },
-                                                  {
-                                                    id: 8,
-                                                    name: "Padma",
-                                                    color: "Purple"
-                                                  }
-                                                ];
-                                                t.equal(array, expected, "Should have the three friends that chose purple");
-                                                
-                                              });
-                                  }));
-                            t.test("each function", (function (t) {
-                                    return collection.clone().each(function (friend, param) {
-                                                t.equal(friend.color, "Purple", "Each friend should choose purple");
-                                                
-                                              });
-                                  }));
-                            t.test("last function", (function (t) {
-                                    var prim0 = collection.clone().last();
-                                    return prim0.then(function (last) {
-                                                return Zora.optionSome(t, last, (function (t, friend) {
-                                                              t.equal(friend.name, "Padma", "Last friend should be Padma");
-                                                              
-                                                            }));
-                                              });
-                                  }));
-                            t.test("sortBy function", (function (t) {
-                                    var prim0 = collection.clone().sortBy("name");
-                                    return prim0.then(function (array) {
-                                                var expected = [
-                                                  {
-                                                    id: 4,
-                                                    name: "Betty",
-                                                    color: "Purple"
-                                                  },
-                                                  {
-                                                    id: 3,
-                                                    name: "Jerome",
-                                                    color: "Purple"
-                                                  },
-                                                  {
-                                                    id: 8,
-                                                    name: "Padma",
-                                                    color: "Purple"
-                                                  }
-                                                ];
-                                                t.equal(array, expected, "Array should be sorted by name");
-                                                
-                                              });
-                                  }));
-                            return Zora.done(undefined);
-                          });
-              }));
-        t.test("mutation functions", (function (t) {
-                t.test("delete function", (function (t) {
-                        var dexie = TestSetup$Dexie.setup(undefined);
-                        var prim0 = TestSetup$Dexie.friendFixture(dexie);
-                        return prim0.then(function (param) {
-                                    var prim0 = Curry._2(TestSetup$Dexie.Friend.findByCriteria, dexie, {
+                t.test("count function", (async function (t) {
+                        var count = await collection.clone().count();
+                        t.equal(count, 3, "3 Purple Elements");
+                      }));
+                t.test("first function", (async function (t) {
+                        var first = await collection.clone().first();
+                        return Zora.optionSome(t, first, (function (t, friend) {
+                                      t.equal(friend, {
+                                            id: 3,
+                                            name: "Jerome",
                                             color: "Purple"
-                                          }).delete();
-                                    var prim0$1 = prim0.then(function (param) {
-                                          return Curry._1(TestSetup$Dexie.Friend.count, dexie);
-                                        });
-                                    return prim0$1.then(function (count) {
-                                                t.equal(count, 5, "Should be down to 5 friends");
-                                                
-                                              });
+                                          }, "First friend should be Betty");
+                                    }));
+                      }));
+                t.test("toArray", (async function (t) {
+                        var array = await collection.clone().toArray();
+                        var expected = [
+                          {
+                            id: 3,
+                            name: "Jerome",
+                            color: "Purple"
+                          },
+                          {
+                            id: 4,
+                            name: "Betty",
+                            color: "Purple"
+                          },
+                          {
+                            id: 8,
+                            name: "Padma",
+                            color: "Purple"
+                          }
+                        ];
+                        t.equal(array, expected, "Should have the three friends that chose purple");
+                      }));
+                t.test("each function", (async function (t) {
+                        return await collection.clone().each(function (friend, param) {
+                                    t.equal(friend.color, "Purple", "Each friend should choose purple");
                                   });
                       }));
-                t.test("modify function", (function (t) {
-                        var dexie = TestSetup$Dexie.setup(undefined);
-                        var prim0 = TestSetup$Dexie.friendFixture(dexie);
-                        return prim0.then(function (param) {
-                                    var prim0 = Curry._2(TestSetup$Dexie.Friend.findByCriteria, dexie, {
-                                            color: "Purple"
-                                          }).modify({
-                                          color: "Blue"
-                                        });
-                                    var prim0$1 = prim0.then(function (num_changed) {
-                                          t.equal(num_changed, 3, "Should have changed all three items");
-                                          return Curry._2(TestSetup$Dexie.Friend.findByCriteria, dexie, {
-                                                        color: "Blue"
-                                                      }).count();
-                                        });
-                                    var prim0$2 = prim0$1.then(function (count) {
-                                          t.equal(count, 5, "Should now have five frineds who chose blue");
-                                          return Curry._2(TestSetup$Dexie.Friend.findByCriteria, dexie, {
-                                                        color: "Purple"
-                                                      }).count();
-                                        });
-                                    return prim0$2.then(function (count) {
-                                                t.equal(count, 0, "Should not be any friends who chose purple");
-                                                
-                                              });
-                                  });
+                t.test("last function", (async function (t) {
+                        var last = await collection.clone().last();
+                        return Zora.optionSome(t, last, (function (t, friend) {
+                                      t.equal(friend.name, "Padma", "Last friend should be Padma");
+                                    }));
                       }));
-                return Zora.done(undefined);
+                t.test("sortBy function", (async function (t) {
+                        var array = await collection.clone().sortBy("name");
+                        var expected = [
+                          {
+                            id: 4,
+                            name: "Betty",
+                            color: "Purple"
+                          },
+                          {
+                            id: 3,
+                            name: "Jerome",
+                            color: "Purple"
+                          },
+                          {
+                            id: 8,
+                            name: "Padma",
+                            color: "Purple"
+                          }
+                        ];
+                        t.equal(array, expected, "Array should be sorted by name");
+                      }));
               }));
-        t.test("Collection operation functions (they return self)", (function (t) {
+        t.test("mutation functions", (async function (t) {
+                t.test("delete function", (async function (t) {
+                        var dexie = TestSetup$Dexie.setup(undefined);
+                        await TestSetup$Dexie.friendFixture(dexie);
+                        await Curry._2(TestSetup$Dexie.Friend.findByCriteria, dexie, {
+                                color: "Purple"
+                              }).delete();
+                        var count = await Curry._1(TestSetup$Dexie.Friend.count, dexie);
+                        t.equal(count, 5, "Should be down to 5 friends");
+                      }));
+              }));
+        t.test("modify function", (async function (t) {
                 var dexie = TestSetup$Dexie.setup(undefined);
-                var prim0 = TestSetup$Dexie.friendFixture(dexie);
-                return prim0.then(function (param) {
-                            var prim0 = Curry._2(TestSetup$Dexie.Friend.bulkPut, dexie, [
-                                  {
-                                    id: 9,
-                                    name: "Padma",
-                                    color: "Purple"
-                                  },
-                                  {
-                                    id: 10,
-                                    name: "Leroy",
-                                    color: "Blue"
-                                  }
-                                ]);
-                            var prim0$1 = prim0.then(function (param) {
-                                  return Curry._2(TestSetup$Dexie.Friend.findByCriteria, dexie, {
-                                              color: "Purple"
-                                            });
-                                });
-                            return prim0$1.then(function (collection) {
-                                        t.test("Filter function", (function (t) {
-                                                var prim0 = collection.clone().filter(function (f) {
-                                                        return f.name !== "Padma";
-                                                      }).toArray();
-                                                return prim0.then(function (array) {
-                                                            t.equal(array.length, 2, "Should only have two elements, the ones not named Padma");
-                                                            
-                                                          });
-                                              }));
-                                        t.test("Offset function", (function (t) {
-                                                var prim0 = collection.clone().offset(2).toArray();
-                                                return prim0.then(function (array) {
-                                                            var expected = [
-                                                              {
-                                                                id: 8,
-                                                                name: "Padma",
-                                                                color: "Purple"
-                                                              },
-                                                              {
-                                                                id: 9,
-                                                                name: "Padma",
-                                                                color: "Purple"
-                                                              }
-                                                            ];
-                                                            t.equal(array, expected, "Should not have first three entries");
-                                                            
-                                                          });
-                                              }));
-                                        t.test("Limit function", (function (t) {
-                                                var prim0 = collection.clone().limit(2).toArray();
-                                                return prim0.then(function (array) {
-                                                            var expected = [
-                                                              {
-                                                                id: 3,
-                                                                name: "Jerome",
-                                                                color: "Purple"
-                                                              },
-                                                              {
-                                                                id: 4,
-                                                                name: "Betty",
-                                                                color: "Purple"
-                                                              }
-                                                            ];
-                                                            t.equal(array, expected, "Should not have first three entries");
-                                                            
-                                                          });
-                                              }));
-                                        t.test("Until function", (function (t) {
-                                                var prim0 = collection.clone().until(function (f) {
-                                                        return f.name === "Padma";
-                                                      }).toArray();
-                                                return prim0.then(function (array) {
-                                                            var expected = [
-                                                              {
-                                                                id: 3,
-                                                                name: "Jerome",
-                                                                color: "Purple"
-                                                              },
-                                                              {
-                                                                id: 4,
-                                                                name: "Betty",
-                                                                color: "Purple"
-                                                              }
-                                                            ];
-                                                            t.equal(array, expected, "Should not have first three entries");
-                                                            
-                                                          });
-                                              }));
-                                        return Zora.done(undefined);
-                                      });
-                          });
+                await TestSetup$Dexie.friendFixture(dexie);
+                var num_changed = await Curry._2(TestSetup$Dexie.Friend.findByCriteria, dexie, {
+                        color: "Purple"
+                      }).modify({
+                      color: "Blue"
+                    });
+                t.equal(num_changed, 3, "Should have changed all three items");
+                var count = await Curry._2(TestSetup$Dexie.Friend.findByCriteria, dexie, {
+                        color: "Blue"
+                      }).count();
+                t.equal(count, 5, "Should now have five frineds who chose blue");
+                var count$1 = await Curry._2(TestSetup$Dexie.Friend.findByCriteria, dexie, {
+                        color: "Purple"
+                      }).count();
+                t.equal(count$1, 0, "Should not be any friends who chose purple");
               }));
-        return Zora.done(undefined);
+        t.test("Collection operation functions (they return self)", (async function (t) {
+                var dexie = TestSetup$Dexie.setup(undefined);
+                await TestSetup$Dexie.friendFixture(dexie);
+                await Curry._2(TestSetup$Dexie.Friend.bulkPut, dexie, [
+                      {
+                        id: 9,
+                        name: "Padma",
+                        color: "Purple"
+                      },
+                      {
+                        id: 10,
+                        name: "Leroy",
+                        color: "Blue"
+                      }
+                    ]);
+                var collection = Curry._2(TestSetup$Dexie.Friend.findByCriteria, dexie, {
+                      color: "Purple"
+                    });
+                t.test("Filter function", (async function (t) {
+                        var array = await collection.clone().filter(function (f) {
+                                return f.name !== "Padma";
+                              }).toArray();
+                        t.equal(array.length, 2, "Should only have two elements, the ones not named Padma");
+                      }));
+                t.test("Offset function", (async function (t) {
+                        var array = await collection.clone().offset(2).toArray();
+                        var expected = [
+                          {
+                            id: 8,
+                            name: "Padma",
+                            color: "Purple"
+                          },
+                          {
+                            id: 9,
+                            name: "Padma",
+                            color: "Purple"
+                          }
+                        ];
+                        t.equal(array, expected, "Should not have first three entries");
+                      }));
+                t.test("Limit function", (async function (t) {
+                        var array = await collection.clone().limit(2).toArray();
+                        var expected = [
+                          {
+                            id: 3,
+                            name: "Jerome",
+                            color: "Purple"
+                          },
+                          {
+                            id: 4,
+                            name: "Betty",
+                            color: "Purple"
+                          }
+                        ];
+                        t.equal(array, expected, "Should not have first three entries");
+                      }));
+                t.test("Until function", (async function (t) {
+                        var array = await collection.clone().until(function (f) {
+                                return f.name === "Padma";
+                              }).toArray();
+                        var expected = [
+                          {
+                            id: 3,
+                            name: "Jerome",
+                            color: "Purple"
+                          },
+                          {
+                            id: 4,
+                            name: "Betty",
+                            color: "Purple"
+                          }
+                        ];
+                        t.equal(array, expected, "Should not have first three entries");
+                      }));
+              }));
       }));
 
 export {
-  p ,
-  pt ,
   
 }
 /*  Not a pure module */

@@ -7,6 +7,5 @@ function inAnyRange(where, options, items) {
 
 export {
   inAnyRange ,
-  
 }
 /* No side effect */

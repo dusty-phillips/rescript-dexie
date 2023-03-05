@@ -6,181 +6,148 @@ import * as Curry from "rescript/lib/es6/curry.js";
 import * as Caml_array from "rescript/lib/es6/caml_array.js";
 import * as TestSetup$Dexie from "./TestSetup.mjs";
 
-Zora$1.test("Table commands", (function (t) {
-        t.test("Test basic methods", (function (t) {
+Zora$1.test("Table commands", (async function (t) {
+        t.test("Test basic methods", (async function (t) {
                 var dexie = TestSetup$Dexie.setup(undefined);
-                return TestSetup$Dexie.pt(TestSetup$Dexie.p(TestSetup$Dexie.p(TestSetup$Dexie.pt(TestSetup$Dexie.p(TestSetup$Dexie.p(TestSetup$Dexie.p(TestSetup$Dexie.p(TestSetup$Dexie.p(TestSetup$Dexie.p(TestSetup$Dexie.p(TestSetup$Dexie.p(TestSetup$Dexie.p(TestSetup$Dexie.p(TestSetup$Dexie.p(TestSetup$Dexie.p(TestSetup$Dexie.p(Curry._2(TestSetup$Dexie.Friend.add, dexie, {
-                                                                                                id: undefined,
-                                                                                                name: "Chris",
-                                                                                                color: "Purple"
-                                                                                              }), (function (id) {
-                                                                                              t.equal(id, 1, "Id should be 1");
-                                                                                              return Curry._2(TestSetup$Dexie.Friend.getById, dexie, 1);
-                                                                                            })), (function (result) {
-                                                                                          Zora.optionSome(t, result, (function (t, friend) {
-                                                                                                  t.equal(friend.name, "Chris", "Returned friend should have same name");
-                                                                                                  t.equal(friend.color, "Purple", "Returned friend should have same color");
-                                                                                                  
-                                                                                                }));
-                                                                                          return Curry._2(TestSetup$Dexie.Friend.getByCriteria, dexie, {
-                                                                                                      name: "Chris"
-                                                                                                    });
-                                                                                        })), (function (result) {
-                                                                                      Zora.optionSome(t, result, (function (t, friend) {
-                                                                                              t.equal(friend.name, "Chris", "Returned friend should have same name");
-                                                                                              t.equal(friend.color, "Purple", "Returned friend should have same color");
-                                                                                              
-                                                                                            }));
-                                                                                      return Curry._2(TestSetup$Dexie.Friend.getById, dexie, 5);
-                                                                                    })), (function (result) {
-                                                                                  Zora.optionNone(t, result, "result should be none");
-                                                                                  return Curry._2(TestSetup$Dexie.Friend.getByCriteria, dexie, {
-                                                                                              name: "nobody"
-                                                                                            });
-                                                                                })), (function (result) {
-                                                                              Zora.optionNone(t, result, "result should be none");
-                                                                              Curry._2(TestSetup$Dexie.Friend.add, dexie, {
-                                                                                    id: undefined,
-                                                                                    name: "Sam",
-                                                                                    color: "Blue"
-                                                                                  });
-                                                                              return Curry._2(TestSetup$Dexie.Friend.put, dexie, {
-                                                                                          id: 3,
-                                                                                          name: "Jess",
-                                                                                          color: "Red"
-                                                                                        });
-                                                                            })), (function (id) {
-                                                                          t.equal(id, 3, "Should have added a third friend");
-                                                                          return Curry._2(TestSetup$Dexie.Friend.getById, dexie, 3);
-                                                                        })), (function (result) {
-                                                                      Zora.optionSome(t, result, (function (t, friend) {
-                                                                              t.equal(friend.name, "Jess", "Name should be what was set");
-                                                                              t.equal(friend.color, "Red", "Color should be what was set");
-                                                                              
-                                                                            }));
-                                                                      return Curry._2(TestSetup$Dexie.Friend.put, dexie, {
-                                                                                  id: 3,
-                                                                                  name: "Jess",
-                                                                                  color: "Blue"
-                                                                                });
-                                                                    })), (function (id) {
-                                                                  t.equal(id, 3, "Should have updated the third friend");
-                                                                  return Curry._2(TestSetup$Dexie.Friend.getById, dexie, 3);
-                                                                })), (function (result) {
-                                                              Zora.optionSome(t, result, (function (t, friend) {
-                                                                      t.equal(friend.name, "Jess", "Name should not have changed");
-                                                                      t.equal(friend.color, "Blue", "Color should have changed");
-                                                                      
-                                                                    }));
-                                                              return Curry._2(TestSetup$Dexie.Friend.$$delete, dexie, 1);
-                                                            })), (function (param) {
-                                                          return Curry._1(TestSetup$Dexie.Friend.count, dexie);
-                                                        })), (function (count) {
-                                                      t.equal(count, 2, "Should now have two entries");
-                                                      return Curry._2(TestSetup$Dexie.Friend.put, dexie, {
-                                                                  id: undefined,
-                                                                  name: "Nora",
-                                                                  color: "Red"
-                                                                });
-                                                    })), (function (id) {
-                                                  t.equal(id, 4, "Should successfully add and increment id with put");
-                                                  return Curry._3(TestSetup$Dexie.Friend.update, dexie, 4, {
-                                                              color: "Purple"
-                                                            });
-                                                })), (function (updated) {
-                                              t.equal(updated, 1, "Should have updated one row");
-                                              return Curry._2(TestSetup$Dexie.Friend.getById, dexie, 4);
-                                            })), (function (result) {
-                                          Zora.optionSome(t, result, (function (t, friend) {
-                                                  t.equal(friend.color, "Purple", "Color should have changed");
-                                                  
-                                                }));
-                                          return Curry._2(TestSetup$Dexie.Friend.findByCriteria, dexie, {
-                                                      color: "Purple"
-                                                    });
-                                        })), (function (prim) {
-                                      return prim.toArray();
-                                    })), (function (result) {
-                                  t.equal(result.length, 1, "Should be one #Purple person in array");
-                                  return Curry._2(TestSetup$Dexie.Friend.where, dexie, "name").equals("Jess").toArray();
-                                })), (function (array) {
-                              t.equal(array, [{
-                                      id: 3,
-                                      name: "Jess",
-                                      color: "Blue"
-                                    }], "Should have the one matching element");
-                              
-                            }));
+                var id = await Curry._2(TestSetup$Dexie.Friend.add, dexie, {
+                      id: undefined,
+                      name: "Chris",
+                      color: "Purple"
+                    });
+                t.equal(id, 1, "Id should be 1");
+                var result = await Curry._2(TestSetup$Dexie.Friend.getById, dexie, 1);
+                Zora.optionSome(t, result, (function (t, friend) {
+                        t.equal(friend.name, "Chris", "Returned friend should have same name");
+                        t.equal(friend.color, "Purple", "Returned friend should have same color");
+                      }));
+                var result$1 = await Curry._2(TestSetup$Dexie.Friend.getByCriteria, dexie, {
+                      name: "Chris"
+                    });
+                Zora.optionSome(t, result$1, (function (t, friend) {
+                        t.equal(friend.name, "Chris", "Returned friend should have same name");
+                        t.equal(friend.color, "Purple", "Returned friend should have same color");
+                      }));
+                var result$2 = await Curry._2(TestSetup$Dexie.Friend.getById, dexie, 5);
+                Zora.optionNone(t, result$2, "result should be none");
+                var result$3 = await Curry._2(TestSetup$Dexie.Friend.getByCriteria, dexie, {
+                      name: "nobody"
+                    });
+                Zora.optionNone(t, result$3, "result should be none");
+                Curry._2(TestSetup$Dexie.Friend.add, dexie, {
+                      id: undefined,
+                      name: "Sam",
+                      color: "Blue"
+                    });
+                var id$1 = await Curry._2(TestSetup$Dexie.Friend.put, dexie, {
+                      id: 3,
+                      name: "Jess",
+                      color: "Red"
+                    });
+                t.equal(id$1, 3, "Should have added a third friend");
+                var result$4 = await Curry._2(TestSetup$Dexie.Friend.getById, dexie, 3);
+                Zora.optionSome(t, result$4, (function (t, friend) {
+                        t.equal(friend.name, "Jess", "Name should be what was set");
+                        t.equal(friend.color, "Red", "Color should be what was set");
+                      }));
+                var id$2 = await Curry._2(TestSetup$Dexie.Friend.put, dexie, {
+                      id: 3,
+                      name: "Jess",
+                      color: "Blue"
+                    });
+                t.equal(id$2, 3, "Should have updated the third friend");
+                var result$5 = await Curry._2(TestSetup$Dexie.Friend.getById, dexie, 3);
+                Zora.optionSome(t, result$5, (function (t, friend) {
+                        t.equal(friend.name, "Jess", "Name should not have changed");
+                        t.equal(friend.color, "Blue", "Color should have changed");
+                      }));
+                await Curry._2(TestSetup$Dexie.Friend.$$delete, dexie, 1);
+                var count = await Curry._1(TestSetup$Dexie.Friend.count, dexie);
+                t.equal(count, 2, "Should now have two entries");
+                var id$3 = await Curry._2(TestSetup$Dexie.Friend.put, dexie, {
+                      id: undefined,
+                      name: "Nora",
+                      color: "Red"
+                    });
+                t.equal(id$3, 4, "Should successfully add and increment id with put");
+                var updated = await Curry._3(TestSetup$Dexie.Friend.update, dexie, 4, {
+                      color: "Purple"
+                    });
+                t.equal(updated, 1, "Should have updated one row");
+                var result$6 = await Curry._2(TestSetup$Dexie.Friend.getById, dexie, 4);
+                Zora.optionSome(t, result$6, (function (t, friend) {
+                        t.equal(friend.color, "Purple", "Color should have changed");
+                      }));
+                var result$7 = await Curry._2(TestSetup$Dexie.Friend.findByCriteria, dexie, {
+                        color: "Purple"
+                      }).toArray();
+                t.equal(result$7.length, 1, "Should be one #Purple person in array");
+                var resultArray = await Curry._2(TestSetup$Dexie.Friend.where, dexie, "name").equals("Jess").toArray();
+                t.equal(resultArray, [{
+                        id: 3,
+                        name: "Jess",
+                        color: "Blue"
+                      }], "Should have the one matching element");
               }));
-        t.test("Test bulk methods", (function (t) {
+        t.test("Test bulk methods", (async function (t) {
                 var dexie = TestSetup$Dexie.setup(undefined);
-                return TestSetup$Dexie.pt(TestSetup$Dexie.p(TestSetup$Dexie.p(TestSetup$Dexie.p(TestSetup$Dexie.p(TestSetup$Dexie.p(TestSetup$Dexie.p(Curry._2(TestSetup$Dexie.Friend.bulkAdd, dexie, [
-                                                        {
-                                                          id: undefined,
-                                                          name: "Chris",
-                                                          color: "Purple"
-                                                        },
-                                                        {
-                                                          id: undefined,
-                                                          name: "Samuel",
-                                                          color: "Blue"
-                                                        },
-                                                        {
-                                                          id: undefined,
-                                                          name: "Samantha",
-                                                          color: "Red"
-                                                        }
-                                                      ]), (function (ids) {
-                                                      t.equal(ids.length, 3, "Should have added two ids");
-                                                      return Curry._1(TestSetup$Dexie.Friend.count, dexie);
-                                                    })), (function (count) {
-                                                  t.equal(count, 3, "Should now have three entries");
-                                                  return Curry._2(TestSetup$Dexie.Friend.bulkGet, dexie, [
-                                                              1,
-                                                              2,
-                                                              999
-                                                            ]);
-                                                })), (function (result) {
-                                              t.equal(result.length, 3, "Should have retrieved two ids");
-                                              Zora.optionSome(t, Caml_array.get(result, 0), (function (t, friend) {
-                                                      t.equal(friend.name, "Chris", "First array result should be Chris");
-                                                      
-                                                    }));
-                                              Zora.optionNone(t, Caml_array.get(result, 2), "Third result should be undefined");
-                                              return Curry._2(TestSetup$Dexie.Friend.bulkDelete, dexie, [
-                                                          2,
-                                                          3,
-                                                          99
-                                                        ]);
-                                            })), (function (param) {
-                                          return Curry._1(TestSetup$Dexie.Friend.count, dexie);
-                                        })), (function (count) {
-                                      t.equal(count, 1, "Should have deleted two of three entries");
-                                      return Curry._2(TestSetup$Dexie.Friend.bulkPut, dexie, [
-                                                  {
-                                                    id: 1,
-                                                    name: "Jerome",
-                                                    color: "Blue"
-                                                  },
-                                                  {
-                                                    id: undefined,
-                                                    name: "Kim",
-                                                    color: "Purple"
-                                                  },
-                                                  {
-                                                    id: 8,
-                                                    name: "Tyrone",
-                                                    color: "Blue"
-                                                  }
-                                                ]);
-                                    })), (function (param) {
-                                  return Curry._1(TestSetup$Dexie.Friend.count, dexie);
-                                })), (function (count) {
-                              t.equal(count, 3, "Should have replaced one and added two entries");
-                              
-                            }));
+                var ids = await Curry._2(TestSetup$Dexie.Friend.bulkAdd, dexie, [
+                      {
+                        id: undefined,
+                        name: "Chris",
+                        color: "Purple"
+                      },
+                      {
+                        id: undefined,
+                        name: "Samuel",
+                        color: "Blue"
+                      },
+                      {
+                        id: undefined,
+                        name: "Samantha",
+                        color: "Red"
+                      }
+                    ]);
+                t.equal(ids.length, 3, "Should have added two ids");
+                var count = await Curry._1(TestSetup$Dexie.Friend.count, dexie);
+                t.equal(count, 3, "Should now have three entries");
+                var result = await Curry._2(TestSetup$Dexie.Friend.bulkGet, dexie, [
+                      1,
+                      2,
+                      999
+                    ]);
+                t.equal(result.length, 3, "Should have retrieved two ids");
+                Zora.optionSome(t, Caml_array.get(result, 0), (function (t, friend) {
+                        t.equal(friend.name, "Chris", "First array result should be Chris");
+                      }));
+                Zora.optionNone(t, Caml_array.get(result, 2), "Third result should be undefined");
+                await Curry._2(TestSetup$Dexie.Friend.bulkDelete, dexie, [
+                      2,
+                      3,
+                      99
+                    ]);
+                var count$1 = await Curry._1(TestSetup$Dexie.Friend.count, dexie);
+                t.equal(count$1, 1, "Should have deleted two of three entries");
+                await Curry._2(TestSetup$Dexie.Friend.bulkPut, dexie, [
+                      {
+                        id: 1,
+                        name: "Jerome",
+                        color: "Blue"
+                      },
+                      {
+                        id: undefined,
+                        name: "Kim",
+                        color: "Purple"
+                      },
+                      {
+                        id: 8,
+                        name: "Tyrone",
+                        color: "Blue"
+                      }
+                    ]);
+                var count$2 = await Curry._1(TestSetup$Dexie.Friend.count, dexie);
+                t.equal(count$2, 3, "Should have replaced one and added two entries");
               }));
-        t.test("Test toArray method", (function (t) {
+        t.test("Test toArray method", (async function (t) {
                 var dexie = TestSetup$Dexie.setup(undefined);
                 var friends = [
                   {
@@ -199,18 +166,15 @@ Zora$1.test("Table commands", (function (t) {
                     color: "Red"
                   }
                 ];
-                return TestSetup$Dexie.p(TestSetup$Dexie.p(Curry._2(TestSetup$Dexie.Friend.bulkAdd, dexie, friends), (function (param) {
-                                  return Curry._1(TestSetup$Dexie.Friend.toArray, dexie);
-                                })), (function (result) {
-                              t.equal(result, friends, "Should list all friends");
-                              return Curry._2(TestSetup$Dexie.Friend.bulkDelete, dexie, [
-                                          1,
-                                          2,
-                                          3
-                                        ]);
-                            }));
+                await Curry._2(TestSetup$Dexie.Friend.bulkAdd, dexie, friends);
+                var result = await Curry._1(TestSetup$Dexie.Friend.toArray, dexie);
+                t.equal(result, friends, "Should list all friends");
+                return await Curry._2(TestSetup$Dexie.Friend.bulkDelete, dexie, [
+                            1,
+                            2,
+                            3
+                          ]);
               }));
-        return Zora.done(undefined);
       }));
 
 export {

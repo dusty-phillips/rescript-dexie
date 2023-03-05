@@ -9,6 +9,5 @@ function stores(version, schema) {
 
 export {
   stores ,
-  
 }
 /* No side effect */
