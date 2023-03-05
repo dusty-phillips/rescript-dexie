@@ -10,11 +10,7 @@
     "in-source": true
   },
   "suffix": ".mjs",
-  "bs-dependencies": [
-    "@rescript/react",
-    "@dusty-phillips/rescript-dexie",
-    "@ryyppy/rescript-promise"
-  ],
+  "bs-dependencies": ["@rescript/react", "@dusty-phillips/rescript-dexie"],
   "warnings": {
     "error": "+101"
   },
