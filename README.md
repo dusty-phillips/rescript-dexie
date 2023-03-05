@@ -76,8 +76,8 @@ dexie->Dexie.Database.opendb->ignore
 ```
 
 Add and query your tables using the module you created with the
-`MakeTable` functor. Most operations return Promises, so become
-familiar with [ryyppy's Promise library](https://github.com/ryyppy/rescript-promise).
+`MakeTable` functor. Note that most functions return promises so you'll
+want to use async and await syntax.
 
 Some things you can do:
 
