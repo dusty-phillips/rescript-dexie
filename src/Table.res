@@ -10,7 +10,7 @@ module type MakeTableType = (Schema: SchemaItem) =>
 {
   type t = Schema.t
   type id = Schema.id
-  let add: (Database.t, t) => promise<id>
+  let add: (~id: id=?, Database.t, t) => promise<id>
   let bulkAdd: (Database.t, array<t>) => promise<array<id>>
   let bulkPut: (Database.t, array<t>) => promise<array<id>>
   let bulkDelete: (Database.t, array<id>) => promise<unit>
@@ -20,10 +20,11 @@ module type MakeTableType = (Schema: SchemaItem) =>
   let findByCriteria: (Database.t, Js.t<'a>) => Collection.t<t>
   let getById: (Database.t, id) => promise<option<t>>
   let getByCriteria: (Database.t, Js.t<'a>) => promise<option<t>>
-  let put: (Database.t, t) => promise<id>
+  let put: (~id: id=?, Database.t, t) => promise<id>
   let update: (Database.t, id, Js.t<'a>) => promise<int>
   let where: (Database.t, string) => Where.t<t>
   let toArray: Database.t => promise<array<t>>
+  let toCollection: Database.t => Collection.t<t>
 }
 
 module MakeTable: MakeTableType = (Schema: SchemaItem) => {
@@ -38,6 +39,8 @@ module MakeTable: MakeTableType = (Schema: SchemaItem) => {
     @send external table: (Database.t, string) => table = "table"
     @send
     external add: (table, t) => promise<id> = "add"
+    @send
+    external addWithId: (table, t, id) => promise<id> = "add"
     @send
     external bulkAdd: (table, array<t>, bulkOptions) => promise<'idorarray> = "bulkAdd"
     @send
@@ -58,55 +61,65 @@ module MakeTable: MakeTableType = (Schema: SchemaItem) => {
     @send
     external put: (table, t) => promise<id> = "put"
     @send
+    external putWithId: (table, t, id) => promise<id> = "put"
+    @send
     external update: (table, id, Js.t<'a>) => promise<int> = "update"
     @send
     external where: (table, string) => Where.t<t> = "where"
     @send
     external toArray: table => promise<array<t>> = "toArray"
+    @send
+    external toCollection: table => Collection.t<t> = "toCollection"
   }
 
-  let add = (dexie: Database.t, item: t): promise<id> => {
-    dexie->Bindings.table(Schema.tableName)->Bindings.add(item)
-  }
+  let add = (~id=?, dexie: Database.t, item: t): promise<id> =>
+    switch id {
+    | Some(id) => dexie->Bindings.table(Schema.tableName)->Bindings.addWithId(item, id)
+    | None => dexie->Bindings.table(Schema.tableName)->Bindings.add(item)
+    }
 
-  let bulkAdd = (dexie: Database.t, items: array<t>): promise<array<id>> => {
+  let bulkAdd = (dexie: Database.t, items: array<t>): promise<array<id>> =>
     dexie->Bindings.table(Schema.tableName)->Bindings.bulkAdd(items, {allKeys: true})
-  }
 
-  let bulkPut = (dexie: Database.t, items: array<t>): promise<array<id>> => {
+  let bulkPut = (dexie: Database.t, items: array<t>): promise<array<id>> =>
     dexie->Bindings.table(Schema.tableName)->Bindings.bulkPut(items, {allKeys: true})
-  }
-  let bulkDelete = (dexie: Database.t, items: array<id>): promise<unit> => {
+
+  let bulkDelete = (dexie: Database.t, items: array<id>): promise<unit> =>
     dexie->Bindings.table(Schema.tableName)->Bindings.bulkDelete(items)
-  }
-  let bulkGet = (dexie: Database.t, ids: array<id>): promise<array<option<t>>> => {
+
+  let bulkGet = (dexie: Database.t, ids: array<id>): promise<array<option<t>>> =>
     dexie->Bindings.table(Schema.tableName)->Bindings.bulkGet(ids)
-  }
-  let count = (dexie: Database.t): promise<int> => {
+
+  let count = (dexie: Database.t): promise<int> =>
     dexie->Bindings.table(Schema.tableName)->Bindings.count
-  }
-  let delete = (dexie: Database.t, id: Schema.id): promise<unit> => {
+
+  let delete = (dexie: Database.t, id: Schema.id): promise<unit> =>
     dexie->Bindings.table(Schema.tableName)->Bindings.delete(id)
-  }
-  let findByCriteria = (dexie: Database.t, criteria: Js.t<'a>): Collection.t<t> => {
+
+  let findByCriteria = (dexie: Database.t, criteria: Js.t<'a>): Collection.t<t> =>
     dexie->Bindings.table(Schema.tableName)->Bindings.findByCriteria(criteria)
-  }
-  let getById = (dexie: Database.t, id: id): promise<option<t>> => {
+
+  let getById = (dexie: Database.t, id: id): promise<option<t>> =>
     dexie->Bindings.table(Schema.tableName)->Bindings.getById(id)
-  }
-  let getByCriteria = (dexie: Database.t, criteria: Js.t<'a>): promise<option<t>> => {
+
+  let getByCriteria = (dexie: Database.t, criteria: Js.t<'a>): promise<option<t>> =>
     dexie->Bindings.table(Schema.tableName)->Bindings.getByCriteria(criteria)
-  }
-  let put = (dexie: Database.t, item: t): promise<id> => {
-    dexie->Bindings.table(Schema.tableName)->Bindings.put(item)
-  }
-  let update = (dexie: Database.t, id: id, patch: Js.t<'a>): promise<int> => {
+
+  let put = (~id=?, dexie: Database.t, item: t): promise<id> =>
+    switch id {
+    | Some(id) => dexie->Bindings.table(Schema.tableName)->Bindings.putWithId(item, id)
+    | None => dexie->Bindings.table(Schema.tableName)->Bindings.put(item)
+    }
+
+  let update = (dexie: Database.t, id: id, patch: Js.t<'a>): promise<int> =>
     dexie->Bindings.table(Schema.tableName)->Bindings.update(id, patch)
-  }
-  let where = (dexie: Database.t, fieldName: string): Where.t<t> => {
+
+  let where = (dexie: Database.t, fieldName: string): Where.t<t> =>
     dexie->Bindings.table(Schema.tableName)->Bindings.where(fieldName)
-  }
-  let toArray = (dexie: Database.t): promise<array<t>> => {
+
+  let toArray = (dexie: Database.t): promise<array<t>> =>
     dexie->Bindings.table(Schema.tableName)->Bindings.toArray
-  }
+
+  let toCollection = (dexie: Database.t): Collection.t<t> =>
+    dexie->Bindings.table(Schema.tableName)->Bindings.toCollection
 }
