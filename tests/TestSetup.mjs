@@ -33,7 +33,7 @@ function setup(param) {
     ]
   ];
   Version$Dexie.stores(dexie.version(1), schema).upgrade(function (_tx) {
-        
+        return Promise.resolve(undefined);
       });
   dexie.open();
   return dexie;
@@ -84,10 +84,37 @@ async function friendFixture(dexie) {
             ]);
 }
 
+var FriendSchema$1 = {
+  tableName: "friends"
+};
+
+var Friend$1 = Table$Dexie.MakeTable(FriendSchema$1);
+
+function setup$1(param) {
+  var someNumber = Math.random().toString();
+  var dexie = new Dexie("hello dexie " + someNumber + "");
+  var schema = [[
+      "friends",
+      "++,name,birthdate,color"
+    ]];
+  Version$Dexie.stores(dexie.version(1), schema).upgrade(function (_tx) {
+        return Promise.resolve(undefined);
+      });
+  dexie.open();
+  return dexie;
+}
+
+var Outbound = {
+  FriendSchema: FriendSchema$1,
+  Friend: Friend$1,
+  setup: setup$1
+};
+
 export {
   FriendSchema ,
   Friend ,
   setup ,
   friendFixture ,
+  Outbound ,
 }
 /*  Not a pure module */

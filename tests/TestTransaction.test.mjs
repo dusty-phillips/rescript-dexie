@@ -14,7 +14,7 @@ Zora$1.test("Transactions", (function (t) {
         t.test("Open transaction", (async function (t) {
                 var dexie = TestSetup$Dexie.setup(undefined);
                 return await dexie.transaction("rw", ["friends"], (async function (_tx) {
-                              var id = await Curry._2(TestSetup$Dexie.Friend.add, dexie, {
+                              var id = await Curry._3(TestSetup$Dexie.Friend.add, undefined, dexie, {
                                     id: undefined,
                                     name: "Chris",
                                     color: "Red"

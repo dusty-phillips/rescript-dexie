@@ -9,7 +9,8 @@ import * as TestSetup$Dexie from "./TestSetup.mjs";
 Zora$1.test("Table commands", (async function (t) {
         t.test("Test basic methods", (async function (t) {
                 var dexie = TestSetup$Dexie.setup(undefined);
-                var id = await Curry._2(TestSetup$Dexie.Friend.add, dexie, {
+                t.equal(dexie.isOpen(), false, "Database should be closed");
+                var id = await Curry._3(TestSetup$Dexie.Friend.add, undefined, dexie, {
                       id: undefined,
                       name: "Chris",
                       color: "Purple"
@@ -20,6 +21,7 @@ Zora$1.test("Table commands", (async function (t) {
                         t.equal(friend.name, "Chris", "Returned friend should have same name");
                         t.equal(friend.color, "Purple", "Returned friend should have same color");
                       }));
+                t.equal(dexie.isOpen(), true, "Database should be open");
                 var result$1 = await Curry._2(TestSetup$Dexie.Friend.getByCriteria, dexie, {
                       name: "Chris"
                     });
@@ -33,12 +35,12 @@ Zora$1.test("Table commands", (async function (t) {
                       name: "nobody"
                     });
                 Zora.optionNone(t, result$3, "result should be none");
-                Curry._2(TestSetup$Dexie.Friend.add, dexie, {
+                Curry._3(TestSetup$Dexie.Friend.add, undefined, dexie, {
                       id: undefined,
                       name: "Sam",
                       color: "Blue"
                     });
-                var id$1 = await Curry._2(TestSetup$Dexie.Friend.put, dexie, {
+                var id$1 = await Curry._3(TestSetup$Dexie.Friend.put, undefined, dexie, {
                       id: 3,
                       name: "Jess",
                       color: "Red"
@@ -49,7 +51,7 @@ Zora$1.test("Table commands", (async function (t) {
                         t.equal(friend.name, "Jess", "Name should be what was set");
                         t.equal(friend.color, "Red", "Color should be what was set");
                       }));
-                var id$2 = await Curry._2(TestSetup$Dexie.Friend.put, dexie, {
+                var id$2 = await Curry._3(TestSetup$Dexie.Friend.put, undefined, dexie, {
                       id: 3,
                       name: "Jess",
                       color: "Blue"
@@ -63,7 +65,7 @@ Zora$1.test("Table commands", (async function (t) {
                 await Curry._2(TestSetup$Dexie.Friend.$$delete, dexie, 1);
                 var count = await Curry._1(TestSetup$Dexie.Friend.count, dexie);
                 t.equal(count, 2, "Should now have two entries");
-                var id$3 = await Curry._2(TestSetup$Dexie.Friend.put, dexie, {
+                var id$3 = await Curry._3(TestSetup$Dexie.Friend.put, undefined, dexie, {
                       id: undefined,
                       name: "Nora",
                       color: "Red"
@@ -87,6 +89,24 @@ Zora$1.test("Table commands", (async function (t) {
                         name: "Jess",
                         color: "Blue"
                       }], "Should have the one matching element");
+                var resultArray$1 = await Curry._1(TestSetup$Dexie.Friend.toCollection, dexie).toArray();
+                t.equal(resultArray$1, [
+                      {
+                        id: 2,
+                        name: "Sam",
+                        color: "Blue"
+                      },
+                      {
+                        id: 3,
+                        name: "Jess",
+                        color: "Blue"
+                      },
+                      {
+                        id: 4,
+                        name: "Nora",
+                        color: "Purple"
+                      }
+                    ], "Should contain all the elements");
               }));
         t.test("Test bulk methods", (async function (t) {
                 var dexie = TestSetup$Dexie.setup(undefined);
@@ -174,6 +194,29 @@ Zora$1.test("Table commands", (async function (t) {
                             2,
                             3
                           ]);
+              }));
+        t.test("Test methods with ids", (async function (t) {
+                var dexie = TestSetup$Dexie.Outbound.setup(undefined);
+                var id = await Curry._3(TestSetup$Dexie.Outbound.Friend.add, 2, dexie, {
+                      name: "Chris",
+                      color: "Purple"
+                    });
+                t.equal(id, 2, "Id should be 2");
+                var result = await Curry._2(TestSetup$Dexie.Outbound.Friend.getById, dexie, 2);
+                Zora.optionSome(t, result, (function (t, friend) {
+                        t.equal(friend.name, "Chris", "Returned friend should have same name");
+                        t.equal(friend.color, "Purple", "Returned friend should have same color");
+                      }));
+                var id$1 = await Curry._3(TestSetup$Dexie.Outbound.Friend.put, 2, dexie, {
+                      name: "Chris",
+                      color: "Blue"
+                    });
+                t.equal(id$1, 2, "Id should still be 2");
+                var result$1 = await Curry._2(TestSetup$Dexie.Outbound.Friend.getById, dexie, 2);
+                return Zora.optionSome(t, result$1, (function (t, friend) {
+                              t.equal(friend.name, "Chris", "Returned friend should have same name");
+                              t.equal(friend.color, "Blue", "Returned friend should have new color");
+                            }));
               }));
       }));
 

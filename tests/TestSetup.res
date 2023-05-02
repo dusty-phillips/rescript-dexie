@@ -30,6 +30,7 @@ let setup = () => {
   ->Version.upgrade(_tx => {
     // Show the upgrade function is bound, because we don't test that anywhere
     let _ = 365 * 24 * 60 * 60 * 1000
+    Js.Promise.resolve()
   })
   ->ignore
 
@@ -49,4 +50,36 @@ let friendFixture = async dexie => {
     {id: Some(7), name: "Natalia", color: #Red},
     {id: Some(8), name: "Padma", color: #Purple},
   ])
+}
+
+module Outbound = {
+  module FriendSchema = {
+    type t = {
+      name: string,
+      color: [#Blue | #Red | #Purple],
+    }
+    type id = int
+    let tableName = "friends"
+  }
+
+  module Friend = Table.MakeTable(FriendSchema)
+
+  let setup = () => {
+    let someNumber = random()->Js.Float.toString
+    let dexie = Database.make(`hello dexie ${someNumber}`)
+    let schema = [("friends", "++,name,birthdate,color")]
+    dexie
+    ->Database.version(1)
+    ->Version.stores(schema)
+    ->Version.upgrade(_tx => {
+      // Show the upgrade function is bound, because we don't test that anywhere
+      let _ = 365 * 24 * 60 * 60 * 1000
+      Js.Promise.resolve()
+    })
+    ->ignore
+
+    dexie->Database.opendb->ignore
+
+    dexie
+  }
 }
